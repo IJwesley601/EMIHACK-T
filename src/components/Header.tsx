@@ -19,7 +19,7 @@ const Header: React.FC = () => {
           </div>
           <input
             type="text"
-            placeholder="Search..."
+            placeholder="Rechercher..."
             className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -48,7 +48,7 @@ const Header: React.FC = () => {
           className="flex items-center text-sm text-gray-600 hover:text-blue-600"
         >
           <RefreshCw className={`h-4 w-4 mr-1 ${loading ? 'animate-spin' : ''}`} />
-          Refresh Data
+          Rafraîchir les données
         </button>
 
         <div className="relative">

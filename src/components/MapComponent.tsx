@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { useData } from '../context/DataContext';
 import L from 'leaflet';
 
-// Fix for default marker icons in React Leaflet
+// Correction pour les icônes de marqueurs par défaut dans React Leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
@@ -17,16 +17,16 @@ const MapComponent: React.FC = () => {
   const [mapReady, setMapReady] = useState(false);
 
   useEffect(() => {
-    // Set map as ready after component mounts
+    // Définir la carte comme prête après le montage du composant
     setMapReady(true);
   }, []);
 
-  // Calculate circle radius based on cases
+  // Calculer le rayon du cercle en fonction des cas
   const getCircleRadius = (cases: number) => {
     return Math.sqrt(cases) * 200;
   };
 
-  // Get circle color based on active cases
+  // Obtenir la couleur du cercle en fonction des cas actifs
   const getCircleColor = (active: number) => {
     if (active > 100000) return '#FF0000';
     if (active > 50000) return '#FF4500';
@@ -53,7 +53,7 @@ const MapComponent: React.FC = () => {
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributeurs'
         />
         {countriesData.map((country) => (
           <React.Fragment key={country.country}>
@@ -72,16 +72,16 @@ const MapComponent: React.FC = () => {
                   <div className="flex items-center mb-2">
                     <img 
                       src={country.countryInfo.flag} 
-                      alt={`${country.country} flag`} 
+                      alt={`Drapeau de ${country.country}`} 
                       className="h-4 mr-2"
                     />
                     <h3 className="font-bold">{country.country}</h3>
                   </div>
-                  <p><strong>Disease:</strong> {selectedDisease.toUpperCase()}</p>
-                  <p><strong>Total Cases:</strong> {country.cases.toLocaleString()}</p>
-                  <p><strong>Active Cases:</strong> {country.active.toLocaleString()}</p>
-                  <p><strong>Deaths:</strong> {country.deaths.toLocaleString()}</p>
-                  <p><strong>Recovered:</strong> {country.recovered.toLocaleString()}</p>
+                  <p><strong>Maladie :</strong> {selectedDisease.toUpperCase()}</p>
+                  <p><strong>Total des cas :</strong> {country.cases.toLocaleString()}</p>
+                  <p><strong>Cas actifs :</strong> {country.active.toLocaleString()}</p>
+                  <p><strong>Décès :</strong> {country.deaths.toLocaleString()}</p>
+                  <p><strong>Guérisons :</strong> {country.recovered.toLocaleString()}</p>
                 </div>
               </Popup>
             </Marker>

@@ -22,7 +22,7 @@ const DataTable: React.FC<DataTableProps> = ({ title, data, columns }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  // Handle sorting
+  // Gérer le tri
   const handleSort = (key: string) => {
     if (sortColumn === key) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -32,14 +32,14 @@ const DataTable: React.FC<DataTableProps> = ({ title, data, columns }) => {
     }
   };
 
-  // Filter data based on search query
+  // Filtrer les données en fonction de la requête de recherche
   const filteredData = data.filter(item => {
     return Object.values(item).some(value => 
       String(value).toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
 
-  // Sort data
+  // Trier les données
   const sortedData = [...filteredData].sort((a, b) => {
     if (!sortColumn) return 0;
     
@@ -60,7 +60,7 @@ const DataTable: React.FC<DataTableProps> = ({ title, data, columns }) => {
     }
   });
 
-  // Paginate data
+  // Paginer les données
   const totalPages = Math.ceil(sortedData.length / itemsPerPage);
   const paginatedData = sortedData.slice(
     (currentPage - 1) * itemsPerPage,
@@ -78,7 +78,7 @@ const DataTable: React.FC<DataTableProps> = ({ title, data, columns }) => {
             </div>
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Rechercher..."
               className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -134,7 +134,7 @@ const DataTable: React.FC<DataTableProps> = ({ title, data, columns }) => {
                   colSpan={columns.length}
                   className="px-6 py-4 text-center text-sm text-gray-500"
                 >
-                  No data found
+                  Aucune donnée trouvée
                 </td>
               </tr>
             )}
@@ -146,11 +146,11 @@ const DataTable: React.FC<DataTableProps> = ({ title, data, columns }) => {
         <div className="px-6 py-4 flex items-center justify-between border-t border-gray-200">
           <div>
             <p className="text-sm text-gray-700">
-              Showing <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> to{' '}
+              Affichage de <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> à{' '}
               <span className="font-medium">
                 {Math.min(currentPage * itemsPerPage, sortedData.length)}
               </span>{' '}
-              of <span className="font-medium">{sortedData.length}</span> results
+              sur <span className="font-medium">{sortedData.length}</span> résultats
             </p>
           </div>
           <div className="flex space-x-2">
@@ -163,7 +163,7 @@ const DataTable: React.FC<DataTableProps> = ({ title, data, columns }) => {
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
-              Previous
+              Précédent
             </button>
             <button
               onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
@@ -174,7 +174,7 @@ const DataTable: React.FC<DataTableProps> = ({ title, data, columns }) => {
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
-              Next
+              Suivant
             </button>
           </div>
         </div>

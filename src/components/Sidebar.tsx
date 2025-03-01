@@ -22,7 +22,7 @@ const Sidebar: React.FC = () => {
           <Activity className="h-8 w-8 text-blue-300" />
           <h1 className="text-xl font-bold">EpiTrack AI</h1>
         </div>
-        <p className="text-blue-300 text-sm mt-1">Epidemic Management Platform</p>
+        <p className="text-blue-300 text-sm mt-1">Plateforme de gestion des épidémies</p>
       </div>
 
       <div className="flex-1 overflow-y-auto py-4">
@@ -39,7 +39,7 @@ const Sidebar: React.FC = () => {
             end
           >
             <LayoutDashboard className="mr-3 h-5 w-5" />
-            Dashboard
+            Tableau de bord
           </NavLink>
 
           <NavLink 
@@ -53,7 +53,7 @@ const Sidebar: React.FC = () => {
             }
           >
             <TrendingUp className="mr-3 h-5 w-5" />
-            AI Predictions
+            Prédictions IA
           </NavLink>
 
           <NavLink 
@@ -67,7 +67,7 @@ const Sidebar: React.FC = () => {
             }
           >
             <Map className="mr-3 h-5 w-5" />
-            Map View
+            Vue carte
           </NavLink>
 
           <NavLink 
@@ -81,19 +81,19 @@ const Sidebar: React.FC = () => {
             }
           >
             <Database className="mr-3 h-5 w-5" />
-            Data Management
+            Gestion des données
           </NavLink>
 
           <div className="pt-4 mt-4 border-t border-blue-800">
             <div className="px-4 py-2">
-              <p className="text-xs uppercase tracking-wider text-blue-400">Alerts</p>
+              <p className="text-xs uppercase tracking-wider text-blue-400">Alertes</p>
             </div>
             <div className="px-4 py-3 text-sm text-blue-100 rounded-lg bg-red-900/30 mx-2 mb-4">
               <div className="flex items-center">
                 <AlertTriangle className="mr-2 h-4 w-4 text-red-400" />
-                <span className="font-medium">COVID-19 Surge</span>
+                <span className="font-medium">Poussée de COVID-19</span>
               </div>
-              <p className="mt-1 text-xs text-blue-300">Significant increase detected in Southeast Asia</p>
+              <p className="mt-1 text-xs text-blue-300">Augmentation significative détectée en Asie du Sud-Est</p>
             </div>
           </div>
         </nav>
@@ -122,7 +122,7 @@ const Sidebar: React.FC = () => {
             }
           >
             <Settings className="mr-3 h-5 w-5" />
-            Settings
+            Paramètres
           </NavLink>
 
           <button 
@@ -130,7 +130,7 @@ const Sidebar: React.FC = () => {
             className="w-full flex items-center px-4 py-2 text-sm rounded-lg text-blue-100 hover:bg-blue-800"
           >
             <LogOut className="mr-3 h-5 w-5" />
-            Logout
+            Déconnexion
           </button>
         </div>
       </div>

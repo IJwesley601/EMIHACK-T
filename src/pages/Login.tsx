@@ -20,7 +20,7 @@ const Login: React.FC = () => {
       await login(email, password);
       navigate('/');
     } catch (err) {
-      setError('Invalid email or password');
+      setError('Email ou mot de passe invalide');
     } finally {
       setIsLoading(false);
     }
@@ -36,7 +36,7 @@ const Login: React.FC = () => {
             </div>
           </div>
           <h1 className="text-2xl font-bold text-gray-800">EpiTrack AI</h1>
-          <p className="text-gray-600 mt-1">Epidemic Management Platform</p>
+          <p className="text-gray-600 mt-1">Plateforme de gestion des épidémies</p>
         </div>
 
         {error && (
@@ -49,7 +49,7 @@ const Login: React.FC = () => {
           <div className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address
+                Adresse email
               </label>
               <input
                 id="email"
@@ -57,14 +57,14 @@ const Login: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your email"
+                placeholder="Entrez votre email"
                 required
               />
             </div>
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Password
+                Mot de passe
               </label>
               <input
                 id="password"
@@ -72,7 +72,7 @@ const Login: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your password"
+                placeholder="Entrez votre mot de passe"
                 required
               />
             </div>
@@ -85,13 +85,13 @@ const Login: React.FC = () => {
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-                  Remember me
+                  Se souvenir de moi
                 </label>
               </div>
 
               <div className="text-sm">
                 <a href="#" className="text-blue-600 hover:text-blue-500">
-                  Forgot password?
+                  Mot de passe oublié ?
                 </a>
               </div>
             </div>
@@ -106,7 +106,7 @@ const Login: React.FC = () => {
               ) : (
                 <>
                   <LogIn className="h-4 w-4 mr-2" />
-                  Sign in
+                  Se connecter
                 </>
               )}
             </button>
@@ -115,7 +115,7 @@ const Login: React.FC = () => {
 
         <div className="mt-8 text-center">
           <p className="text-sm text-gray-600">
-            For demo purposes, you can use any email and password
+            Pour des raisons de démonstration, vous pouvez utiliser n'importe quel email et mot de passe
           </p>
         </div>
       </div>

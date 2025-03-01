@@ -18,8 +18,8 @@ const MapView: React.FC = () => {
   return (
     <div className="space-y-6 h-full flex flex-col">
       <div>
-        <h1 className="text-2xl font-bold text-gray-800">Geographic Distribution</h1>
-        <p className="text-gray-600">Interactive map of epidemic hotspots</p>
+        <h1 className="text-2xl font-bold text-gray-800">Répartition géographique</h1>
+        <p className="text-gray-600">Carte interactive des points chauds épidémiques</p>
       </div>
 
       <div className="flex flex-col md:flex-row gap-6 flex-1">
@@ -28,13 +28,13 @@ const MapView: React.FC = () => {
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center">
                 <Map className="h-5 w-5 text-blue-500 mr-2" />
-                <h3 className="font-medium">Global Epidemic Map</h3>
+                <h3 className="font-medium">Carte mondiale de l'épidémie</h3>
               </div>
               
               <div className="flex items-center space-x-4">
                 <div>
                   <label htmlFor="disease-select" className="block text-sm text-gray-600 mb-1">
-                    Disease
+                    Maladie
                   </label>
                   <select
                     id="disease-select"
@@ -52,7 +52,7 @@ const MapView: React.FC = () => {
                 
                 <div>
                   <label htmlFor="map-type" className="block text-sm text-gray-600 mb-1">
-                    Display
+                    Affichage
                   </label>
                   <select
                     id="map-type"
@@ -60,9 +60,9 @@ const MapView: React.FC = () => {
                     value={mapType}
                     onChange={(e) => setMapType(e.target.value as any)}
                   >
-                    <option value="cases">Total Cases</option>
-                    <option value="deaths">Deaths</option>
-                    <option value="recovered">Recovered</option>
+                    <option value="cases">Total des cas</option>
+                    <option value="deaths">Décès</option>
+                    <option value="recovered">Guérisons</option>
                   </select>
                 </div>
               </div>
@@ -80,24 +80,24 @@ const MapView: React.FC = () => {
           <div className="bg-white p-4 rounded-lg shadow-md mb-4">
             <div className="flex items-center mb-3">
               <Filter className="h-5 w-5 text-blue-500 mr-2" />
-              <h3 className="font-medium">Map Legend</h3>
+              <h3 className="font-medium">Légende de la carte</h3>
             </div>
             <div className="space-y-3">
               <div className="flex items-center">
                 <div className="h-4 w-4 rounded-full bg-red-500 mr-2"></div>
-                <span className="text-sm">High Infection Rate</span>
+                <span className="text-sm">Taux d'infection élevé</span>
               </div>
               <div className="flex items-center">
                 <div className="h-4 w-4 rounded-full bg-orange-500 mr-2"></div>
-                <span className="text-sm">Medium Infection Rate</span>
+                <span className="text-sm">Taux d'infection moyen</span>
               </div>
               <div className="flex items-center">
                 <div className="h-4 w-4 rounded-full bg-yellow-500 mr-2"></div>
-                <span className="text-sm">Low Infection Rate</span>
+                <span className="text-sm">Taux d'infection faible</span>
               </div>
               <div className="flex items-center">
                 <div className="h-4 w-4 rounded-full bg-green-500 mr-2"></div>
-                <span className="text-sm">Minimal Infection Rate</span>
+                <span className="text-sm">Taux d'infection minimal</span>
               </div>
             </div>
           </div>
@@ -105,32 +105,32 @@ const MapView: React.FC = () => {
           <div className="bg-white p-4 rounded-lg shadow-md mb-4">
             <div className="flex items-center mb-3">
               <AlertTriangle className="h-5 w-5 text-red-500 mr-2" />
-              <h3 className="font-medium">Hotspot Alerts</h3>
+              <h3 className="font-medium">Alertes des points chauds</h3>
             </div>
             <div className="space-y-3">
               <div className="p-3 bg-red-50 rounded-lg">
-                <h4 className="text-sm font-medium text-red-800">New Delhi, India</h4>
-                <p className="text-xs text-red-600 mt-1">Rapid increase in cases over the past week</p>
+                <h4 className="text-sm font-medium text-red-800">New Delhi, Inde</h4>
+                <p className="text-xs text-red-600 mt-1">Augmentation rapide des cas cette semaine</p>
               </div>
               <div className="p-3 bg-red-50 rounded-lg">
-                <h4 className="text-sm font-medium text-red-800">São Paulo, Brazil</h4>
-                <p className="text-xs text-red-600 mt-1">Healthcare system under pressure</p>
+                <h4 className="text-sm font-medium text-red-800">São Paulo, Brésil</h4>
+                <p className="text-xs text-red-600 mt-1">Système de santé sous pression</p>
               </div>
               <div className="p-3 bg-yellow-50 rounded-lg">
-                <h4 className="text-sm font-medium text-yellow-800">Los Angeles, USA</h4>
-                <p className="text-xs text-yellow-600 mt-1">Moderate increase in hospitalization</p>
+                <h4 className="text-sm font-medium text-yellow-800">Los Angeles, États-Unis</h4>
+                <p className="text-xs text-yellow-600 mt-1">Augmentation modérée des hospitalisations</p>
               </div>
             </div>
           </div>
           
           <div className="bg-white p-4 rounded-lg shadow-md">
-            <h3 className="font-medium mb-3">Regional Statistics</h3>
+            <h3 className="font-medium mb-3">Statistiques régionales</h3>
             <div className="space-y-4">
               <div>
-                <h4 className="text-sm font-medium">Asia</h4>
+                <h4 className="text-sm font-medium">Asie</h4>
                 <div className="flex justify-between text-xs text-gray-600 mb-1">
-                  <span>Total Cases</span>
-                  <span>24.5M</span>
+                  <span>Total des cas</span>
+                  <span>24,5M</span>
                 </div>
                 <div className="h-2 bg-gray-200 rounded-full">
                   <div className="h-full bg-blue-500 rounded-full" style={{ width: '75%' }}></div>
@@ -139,28 +139,28 @@ const MapView: React.FC = () => {
               <div>
                 <h4 className="text-sm font-medium">Europe</h4>
                 <div className="flex justify-between text-xs text-gray-600 mb-1">
-                  <span>Total Cases</span>
-                  <span>18.2M</span>
+                  <span>Total des cas</span>
+                  <span>18,2M</span>
                 </div>
                 <div className="h-2 bg-gray-200 rounded-full">
                   <div className="h-full bg-blue-500 rounded-full" style={{ width: '60%' }}></div>
                 </div>
               </div>
               <div>
-                <h4 className="text-sm font-medium">North America</h4>
+                <h4 className="text-sm font-medium">Amérique du Nord</h4>
                 <div className="flex justify-between text-xs text-gray-600 mb-1">
-                  <span>Total Cases</span>
-                  <span>15.8M</span>
+                  <span>Total des cas</span>
+                  <span>15,8M</span>
                 </div>
                 <div className="h-2 bg-gray-200 rounded-full">
                   <div className="h-full bg-blue-500 rounded-full" style={{ width: '50%' }}></div>
                 </div>
               </div>
               <div>
-                <h4 className="text-sm font-medium">Africa</h4>
+                <h4 className="text-sm font-medium">Afrique</h4>
                 <div className="flex justify-between text-xs text-gray-600 mb-1">
-                  <span>Total Cases</span>
-                  <span>8.4M</span>
+                  <span>Total des cas</span>
+                  <span>8,4M</span>
                 </div>
                 <div className="h-2 bg-gray-200 rounded-full">
                   <div className="h-full bg-blue-500 rounded-full" style={{ width: '30%' }}></div>

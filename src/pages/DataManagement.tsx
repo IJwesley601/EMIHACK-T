@@ -8,71 +8,71 @@ const DataManagement: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'countries' | 'sources'>('countries');
   const [filterRegion, setFilterRegion] = useState<string>('all');
 
-  // Mock data sources
+  // Données sources fictives
   const dataSources = [
     {
       id: 1,
-      name: 'WHO COVID-19 Dashboard',
+      name: 'Tableau de bord COVID-19 de l\'OMS',
       type: 'API',
       lastUpdate: '2023-05-15',
-      status: 'Active',
-      frequency: 'Daily',
+      status: 'Actif',
+      frequency: 'Quotidien',
     },
     {
       id: 2,
-      name: 'CDC Influenza Data',
-      type: 'CSV Import',
+      name: 'Données sur la grippe du CDC',
+      type: 'Import CSV',
       lastUpdate: '2023-05-10',
-      status: 'Active',
-      frequency: 'Weekly',
+      status: 'Actif',
+      frequency: 'Hebdomadaire',
     },
     {
       id: 3,
-      name: 'ECDC Epidemic Intelligence',
+      name: 'Veille épidémique de l\'ECDC',
       type: 'API',
       lastUpdate: '2023-05-14',
-      status: 'Active',
-      frequency: 'Daily',
+      status: 'Actif',
+      frequency: 'Quotidien',
     },
     {
       id: 4,
-      name: 'Johns Hopkins University',
+      name: 'Université Johns Hopkins',
       type: 'API',
       lastUpdate: '2023-05-15',
-      status: 'Active',
-      frequency: 'Daily',
+      status: 'Actif',
+      frequency: 'Quotidien',
     },
     {
       id: 5,
       name: 'Our World in Data',
-      type: 'CSV Import',
+      type: 'Import CSV',
       lastUpdate: '2023-05-12',
-      status: 'Active',
-      frequency: 'Daily',
+      status: 'Actif',
+      frequency: 'Quotidien',
     },
   ];
 
-  // Define columns for the countries table
+  // Définir les colonnes pour le tableau des pays
   const countriesColumns = [
     { 
       key: 'country', 
-      label: 'Country', 
+      label: 'Pays', 
       sortable: true,
       render: (value: string, row: any) => (
         <div className="flex items-center">
           <img 
             src={row.countryInfo.flag} 
-            alt={`${value} flag`} 
+            alt={`Drapeau de ${value}`} 
             className="h-4 w-6 mr-2"
           />
           <span>{value}</span>
         </div>
       )
     },
-    { key: 'cases', label: 'Total Cases', sortable: true, render: (value: number) => value.toLocaleString() },
-    { key: 'active', label: 'Active Cases', sortable: true, render: (value: number) => value.toLocaleString() },
-    { key: 'deaths', label: 'Deaths', sortable: true, render: (value: number) => value.toLocaleString() },
-    { key: 'recovered', label: 'Recovered', sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: 'cases', label: 'Total des cas', sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: 'active', label: 'Cas actifs', sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: 'deaths', label: 'Décès', sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: 'recovered', label: 'Guérisons', sortable: true, render: (value: number) => value.toLocaleString() },
     { 
       key: 'actions', 
       label: 'Actions', 
@@ -89,19 +89,19 @@ const DataManagement: React.FC = () => {
     },
   ];
 
-  // Define columns for the data sources table
+  // Définir les colonnes pour le tableau des sources de données
   const sourcesColumns = [
-    { key: 'name', label: 'Source Name', sortable: true },
+    { key: 'name', label: 'Nom de la source', sortable: true },
     { key: 'type', label: 'Type', sortable: true },
-    { key: 'lastUpdate', label: 'Last Update', sortable: true },
-    { key: 'frequency', label: 'Update Frequency', sortable: true },
+    { key: 'lastUpdate', label: 'Dernière mise à jour', sortable: true },
+    { key: 'frequency', label: 'Fréquence de mise à jour', sortable: true },
     { 
       key: 'status', 
-      label: 'Status', 
+      label: 'Statut', 
       sortable: true,
       render: (value: string) => (
         <span className={`px-2 py-1 rounded-full text-xs ${
-          value === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+          value === 'Actif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
         }`}>
           {value}
         </span>
@@ -123,19 +123,19 @@ const DataManagement: React.FC = () => {
     },
   ];
 
-  // Filter countries by region (mock implementation)
+  // Filtrer les pays par région (implémentation fictive)
   const filteredCountries = filterRegion === 'all' 
     ? countriesData 
     : countriesData.filter(country => {
-        // This is a simplified mock filter
+        // Ceci est un filtre simplifié
         if (filterRegion === 'asia') {
-          return ['China', 'India', 'Japan', 'South Korea', 'Vietnam', 'Thailand'].includes(country.country);
+          return ['Chine', 'Inde', 'Japon', 'Corée du Sud', 'Vietnam', 'Thaïlande'].includes(country.country);
         } else if (filterRegion === 'europe') {
-          return ['Germany', 'France', 'UK', 'Italy', 'Spain', 'Netherlands'].includes(country.country);
+          return ['Allemagne', 'France', 'Royaume-Uni', 'Italie', 'Espagne', 'Pays-Bas'].includes(country.country);
         } else if (filterRegion === 'americas') {
-          return ['USA', 'Canada', 'Brazil', 'Mexico', 'Argentina', 'Colombia'].includes(country.country);
+          return ['États-Unis', 'Canada', 'Brésil', 'Mexique', 'Argentine', 'Colombie'].includes(country.country);
         } else if (filterRegion === 'africa') {
-          return ['South Africa', 'Nigeria', 'Egypt', 'Morocco', 'Kenya', 'Ethiopia'].includes(country.country);
+          return ['Afrique du Sud', 'Nigeria', 'Égypte', 'Maroc', 'Kenya', 'Éthiopie'].includes(country.country);
         }
         return true;
       });
@@ -151,8 +151,8 @@ const DataManagement: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-800">Data Management</h1>
-        <p className="text-gray-600">Manage and export epidemic data</p>
+        <h1 className="text-2xl font-bold text-gray-800">Gestion des données</h1>
+        <p className="text-gray-600">Gérer et exporter les données épidémiques</p>
       </div>
 
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -168,7 +168,7 @@ const DataManagement: React.FC = () => {
             >
               <div className="flex items-center">
                 <Database className="h-4 w-4 mr-2" />
-                Countries Data
+                Données des pays
               </div>
             </button>
             <button
@@ -181,7 +181,7 @@ const DataManagement: React.FC = () => {
             >
               <div className="flex items-center">
                 <Upload className="h-4 w-4 mr-2" />
-                Data Sources
+                Sources de données
               </div>
             </button>
           </div>
@@ -194,7 +194,7 @@ const DataManagement: React.FC = () => {
                 <div className="flex items-center space-x-4">
                   <div>
                     <label htmlFor="disease-filter" className="block text-sm text-gray-600 mb-1">
-                      Disease
+                      Maladie
                     </label>
                     <select
                       id="disease-filter"
@@ -211,7 +211,7 @@ const DataManagement: React.FC = () => {
                   
                   <div>
                     <label htmlFor="region-filter" className="block text-sm text-gray-600 mb-1">
-                      Region
+                      Région
                     </label>
                     <select
                       id="region-filter"
@@ -219,11 +219,11 @@ const DataManagement: React.FC = () => {
                       value={filterRegion}
                       onChange={(e) => setFilterRegion(e.target.value)}
                     >
-                      <option value="all">All Regions</option>
-                      <option value="asia">Asia</option>
+                      <option value="all">Toutes les régions</option>
+                      <option value="asia">Asie</option>
                       <option value="europe">Europe</option>
-                      <option value="americas">Americas</option>
-                      <option value="africa">Africa</option>
+                      <option value="americas">Amériques</option>
+                      <option value="africa">Afrique</option>
                     </select>
                   </div>
                 </div>
@@ -231,17 +231,17 @@ const DataManagement: React.FC = () => {
                 <div className="flex space-x-3">
                   <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
                     <Download className="h-4 w-4 mr-2" />
-                    Export Data
+                    Exporter les données
                   </button>
                   <button className="flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-md text-sm hover:bg-gray-200">
                     <Filter className="h-4 w-4 mr-2" />
-                    Advanced Filters
+                    Filtres avancés
                   </button>
                 </div>
               </div>
               
               <DataTable
-                title="Countries Data"
+                title="Données des pays"
                 data={filteredCountries}
                 columns={countriesColumns}
               />
@@ -251,15 +251,15 @@ const DataManagement: React.FC = () => {
           {activeTab === 'sources' && (
             <>
               <div className="mb-6 flex justify-between items-center">
-                <h3 className="text-lg font-medium">Data Sources</h3>
+                <h3 className="text-lg font-medium">Sources de données</h3>
                 <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
                   <Upload className="h-4 w-4 mr-2" />
-                  Add New Source
+                  Ajouter une nouvelle source
                 </button>
               </div>
               
               <DataTable
-                title="Data Sources"
+                title="Sources de données"
                 data={dataSources}
                 columns={sourcesColumns}
               />

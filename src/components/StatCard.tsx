@@ -39,7 +39,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, change, icon, color }
               isPositive ? 'text-red-500' : 'text-green-500'
             }`}
           >
-            {changeText} from last week
+            {changeText} par rapport à la semaine dernière
           </span>
         </div>
       )}

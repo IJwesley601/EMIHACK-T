@@ -14,33 +14,33 @@ const Dashboard: React.FC = () => {
     loading
   } = useData();
 
-  // Find the selected disease
+  // Trouver la maladie sélectionnée
   const currentDisease = diseases.find(d => d.id === selectedDisease) || diseases[0];
 
-  // Prepare data for the timeline chart
+  // Préparer les données pour le graphique de la chronologie
   const timelineData = globalTimeline.slice(-30);
 
-  // Prepare data for the countries table
+  // Préparer les données pour le tableau des pays
   const tableColumns = [
     { 
       key: 'country', 
-      label: 'Country', 
+      label: 'Pays', 
       sortable: true,
       render: (value: string, row: any) => (
         <div className="flex items-center">
           <img 
             src={row.countryInfo.flag} 
-            alt={`${value} flag`} 
+            alt={`Drapeau de ${value}`} 
             className="h-4 w-6 mr-2"
           />
           <span>{value}</span>
         </div>
       )
     },
-    { key: 'cases', label: 'Total Cases', sortable: true, render: (value: number) => value.toLocaleString() },
-    { key: 'active', label: 'Active Cases', sortable: true, render: (value: number) => value.toLocaleString() },
-    { key: 'deaths', label: 'Deaths', sortable: true, render: (value: number) => value.toLocaleString() },
-    { key: 'recovered', label: 'Recovered', sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: 'cases', label: 'Total des cas', sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: 'active', label: 'Cas actifs', sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: 'deaths', label: 'Décès', sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: 'recovered', label: 'Guérisons', sortable: true, render: (value: number) => value.toLocaleString() },
   ];
 
   if (loading) {
@@ -54,34 +54,34 @@ const Dashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
-        <p className="text-gray-600">Overview of global epidemic data and trends</p>
+        <h1 className="text-2xl font-bold text-gray-800">Tableau de bord</h1>
+        <p className="text-gray-600">Aperçu des données et tendances épidémiques mondiales</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
-          title="Total Cases"
+          title="Total des cas"
           value={currentDisease?.cases || 0}
           change={2.4}
           icon={<Activity className="h-6 w-6 text-white" />}
           color="bg-blue-500"
         />
         <StatCard
-          title="Active Cases"
+          title="Cas actifs"
           value={currentDisease?.active || 0}
           change={5.1}
           icon={<Users className="h-6 w-6 text-white" />}
           color="bg-yellow-500"
         />
         <StatCard
-          title="Deaths"
+          title="Décès"
           value={currentDisease?.deaths || 0}
           change={-0.8}
           icon={<AlertTriangle className="h-6 w-6 text-white" />}
           color="bg-red-500"
         />
         <StatCard
-          title="Recovered"
+          title="Guérisons"
           value={currentDisease?.recovered || 0}
           change={3.2}
           icon={<Heart className="h-6 w-6 text-white" />}
@@ -95,15 +95,15 @@ const Dashboard: React.FC = () => {
             data={timelineData}
             xKey="date"
             lines={[
-              { key: 'cases', color: '#3b82f6', name: 'Total Cases' },
-              { key: 'deaths', color: '#ef4444', name: 'Deaths' },
-              { key: 'recovered', color: '#10b981', name: 'Recovered' }
+              { key: 'cases', color: '#3b82f6', name: 'Total des cas' },
+              { key: 'deaths', color: '#ef4444', name: 'Décès' },
+              { key: 'recovered', color: '#10b981', name: 'Guérisons' }
             ]}
-            title={`${currentDisease?.name || 'Disease'} Trends - Last 30 Days`}
+            title={`${currentDisease?.name || 'Maladie'} Tendances - 30 derniers jours`}
           />
         </div>
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-4">Epidemic Alerts</h3>
+          <h3 className="text-lg font-semibold mb-4">Alertes épidémiques</h3>
           <div className="space-y-4">
             <div className="p-4 bg-red-50 rounded-lg border border-red-200">
               <div className="flex items-center">
@@ -111,8 +111,8 @@ const Dashboard: React.FC = () => {
                   <AlertTriangle className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-red-800">COVID-19 Surge</h4>
-                  <p className="text-sm text-red-600">Significant increase in Southeast Asia</p>
+                  <h4 className="font-medium text-red-800">Augmentation du COVID-19</h4>
+                  <p className="text-sm text-red-600">Augmentation significative en Asie du Sud-Est</p>
                 </div>
               </div>
             </div>
@@ -122,8 +122,8 @@ const Dashboard: React.FC = () => {
                   <AlertTriangle className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-yellow-800">Influenza Outbreak</h4>
-                  <p className="text-sm text-yellow-600">Seasonal outbreak in North America</p>
+                  <h4 className="font-medium text-yellow-800">Épidémie de grippe</h4>
+                  <p className="text-sm text-yellow-600">Épidémie saisonnière en Amérique du Nord</p>
                 </div>
               </div>
             </div>
@@ -133,8 +133,8 @@ const Dashboard: React.FC = () => {
                   <Activity className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-blue-800">Vaccination Campaign</h4>
-                  <p className="text-sm text-blue-600">New vaccination drive in Europe</p>
+                  <h4 className="font-medium text-blue-800">Campagne de vaccination</h4>
+                  <p className="text-sm text-blue-600">Nouvelle campagne de vaccination en Europe</p>
                 </div>
               </div>
             </div>
@@ -144,7 +144,7 @@ const Dashboard: React.FC = () => {
 
       <div>
         <DataTable
-          title="Country-wise Data"
+          title="Données par pays"
           data={countriesData}
           columns={tableColumns}
         />
