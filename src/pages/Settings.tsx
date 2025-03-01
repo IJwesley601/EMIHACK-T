@@ -101,7 +101,7 @@ const Settings = () => {
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-2">Paramètres</h1>
       <p className="text-gray-600 mb-6">Gérez les paramètres et préférences de votre compte</p>
-
+  
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Paramètres du profil */}
         <div>
@@ -119,7 +119,7 @@ const Settings = () => {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
                 />
               </div>
               <div>
@@ -128,7 +128,7 @@ const Settings = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
                 />
               </div>
               <div>
@@ -137,7 +137,7 @@ const Settings = () => {
                   type="text"
                   value={user?.role === 'admin' ? 'Administrateur' : 'Personnel médical'}
                   disabled
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 py-2.5 px-4 text-base"
                 />
               </div>
               <button
@@ -149,7 +149,7 @@ const Settings = () => {
               </button>
             </div>
           </div>
-
+  
           {/* Paramètres du mot de passe */}
           <div className="bg-white p-6 rounded-lg shadow mb-6">
             <div className="flex items-center mb-4">
@@ -165,7 +165,7 @@ const Settings = () => {
                   type="password"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
                 />
               </div>
               <div>
@@ -174,7 +174,7 @@ const Settings = () => {
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
                 />
               </div>
               <div>
@@ -183,7 +183,7 @@ const Settings = () => {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
                 />
               </div>
               <button
@@ -196,7 +196,7 @@ const Settings = () => {
             </div>
           </div>
         </div>
-
+  
         {/* Paramètres de notification */}
         <div>
           <div className="bg-white p-6 rounded-lg shadow mb-6">
@@ -240,7 +240,7 @@ const Settings = () => {
                 <select
                   value={alertThreshold}
                   onChange={handleAlertThresholdChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
                 >
                   <option value="low">Faible (Notifier pour tous les changements)</option>
                   <option value="medium">Moyen (Notifier pour les changements significatifs)</option>
@@ -256,7 +256,7 @@ const Settings = () => {
               </button>
             </div>
           </div>
-
+  
           {/* Paramètres des données */}
           <div className="bg-white p-6 rounded-lg shadow mb-6">
             <div className="flex items-center mb-4">
@@ -271,7 +271,7 @@ const Settings = () => {
                 <select
                   value={dataRefreshInterval}
                   onChange={handleDataRefreshIntervalChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
                 >
                   <option value="15">Toutes les 15 minutes</option>
                   <option value="30">Toutes les 30 minutes</option>
@@ -281,6 +281,7 @@ const Settings = () => {
                   <option value="1440">Toutes les 24 heures</option>
                 </select>
               </div>
+             
               <div className="flex space-x-4">
                 <button
                   className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
@@ -292,7 +293,7 @@ const Settings = () => {
                   onClick={handleDataSettingsSave}
                   className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
                 >
-                  <Save className="w-4 h-4 mr-2" />
+                  <Save className="w-5 h-5 mr-2" />
                   Enregistrer les paramètres des données
                 </button>
               </div>
@@ -300,7 +301,7 @@ const Settings = () => {
           </div>
 
           {/* Clés API */}
-          <div className="bg-white p-6 rounded-lg shadow">
+          {/* <div className="bg-white p-6 rounded-lg shadow">
             <div className="flex items-center mb-4">
               <Database className="w-5 h-5" />
               <h2 className="text-xl font-semibold ml-2">Clés API</h2>
@@ -338,7 +339,7 @@ const Settings = () => {
               <Plus className="w-4 h-4 mr-2" />
               Générer une nouvelle clé API
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
 
