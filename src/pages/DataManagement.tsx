@@ -135,8 +135,9 @@ const DataManagement: React.FC = () => {
   ];
 
   // Fonction pour télécharger les données en Excel
-  const handleDownloadExcel = (data: any, fileName: string) => {
-    const ws = XLSX.utils.json_to_sheet([data]);
+  const handleDownloadExcel = (data: any[], fileName: string) => {
+    // Convertir toutes les données en feuille Excel
+    const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
     XLSX.writeFile(wb, `${fileName}.xlsx`);
