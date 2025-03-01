@@ -1,16 +1,17 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  TrendingUp, 
-  Map, 
-  Database, 
-  Settings, 
+import React from "react";
+import { NavLink } from "react-router-dom";
+import {
+  LayoutDashboard,
+  TrendingUp,
+  Map,
+  Database,
+  Settings,
   LogOut,
   Activity,
-  AlertTriangle
-} from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+  AlertTriangle,
+  User,
+} from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 const Sidebar: React.FC = () => {
   const { logout, user } = useAuth();
@@ -22,18 +23,20 @@ const Sidebar: React.FC = () => {
           <Activity className="h-8 w-8 text-blue-300" />
           <h1 className="text-xl font-bold">EpiTrack AI</h1>
         </div>
-        <p className="text-blue-300 text-sm mt-1">Plateforme de gestion des épidémies</p>
+        <p className="text-blue-300 text-sm mt-1">
+          Plateforme de gestion des épidémies
+        </p>
       </div>
 
       <div className="flex-1 overflow-y-auto py-4">
         <nav className="px-4 space-y-1">
-          <NavLink 
-            to="/" 
-            className={({ isActive }) => 
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
               `flex items-center px-4 py-3 text-sm rounded-lg ${
-                isActive 
-                  ? 'bg-blue-800 text-white' 
-                  : 'text-blue-100 hover:bg-blue-800'
+                isActive
+                  ? "bg-blue-800 text-white"
+                  : "text-blue-100 hover:bg-blue-800"
               }`
             }
             end
@@ -42,13 +45,13 @@ const Sidebar: React.FC = () => {
             Tableau de bord
           </NavLink>
 
-          <NavLink 
-            to="/predictions" 
-            className={({ isActive }) => 
+          <NavLink
+            to="/predictions"
+            className={({ isActive }) =>
               `flex items-center px-4 py-3 text-sm rounded-lg ${
-                isActive 
-                  ? 'bg-blue-800 text-white' 
-                  : 'text-blue-100 hover:bg-blue-800'
+                isActive
+                  ? "bg-blue-800 text-white"
+                  : "text-blue-100 hover:bg-blue-800"
               }`
             }
           >
@@ -56,13 +59,13 @@ const Sidebar: React.FC = () => {
             Prédictions IA
           </NavLink>
 
-          <NavLink 
-            to="/map" 
-            className={({ isActive }) => 
+          <NavLink
+            to="/map"
+            className={({ isActive }) =>
               `flex items-center px-4 py-3 text-sm rounded-lg ${
-                isActive 
-                  ? 'bg-blue-800 text-white' 
-                  : 'text-blue-100 hover:bg-blue-800'
+                isActive
+                  ? "bg-blue-800 text-white"
+                  : "text-blue-100 hover:bg-blue-800"
               }`
             }
           >
@@ -70,13 +73,13 @@ const Sidebar: React.FC = () => {
             Vue carte
           </NavLink>
 
-          <NavLink 
-            to="/data" 
-            className={({ isActive }) => 
+          <NavLink
+            to="/data"
+            className={({ isActive }) =>
               `flex items-center px-4 py-3 text-sm rounded-lg ${
-                isActive 
-                  ? 'bg-blue-800 text-white' 
-                  : 'text-blue-100 hover:bg-blue-800'
+                isActive
+                  ? "bg-blue-800 text-white"
+                  : "text-blue-100 hover:bg-blue-800"
               }`
             }
           >
@@ -84,16 +87,34 @@ const Sidebar: React.FC = () => {
             Gestion des données
           </NavLink>
 
+          <NavLink
+            to="/user"
+            className={({ isActive }) =>
+              `flex items-center px-4 py-3 text-sm rounded-lg ${
+                isActive
+                  ? "bg-blue-800 text-white"
+                  : "text-blue-100 hover:bg-blue-800"
+              }`
+            }
+          >
+            <User className="mr-3 h-5 w-5" />
+            Gestion utilisateurs
+          </NavLink>
+
           <div className="pt-4 mt-4 border-t border-blue-800">
             <div className="px-4 py-2">
-              <p className="text-xs uppercase tracking-wider text-blue-400">Alertes</p>
+              <p className="text-xs uppercase tracking-wider text-blue-400">
+                Alertes
+              </p>
             </div>
             <div className="px-4 py-3 text-sm text-blue-100 rounded-lg bg-red-900/30 mx-2 mb-4">
               <div className="flex items-center">
                 <AlertTriangle className="mr-2 h-4 w-4 text-red-400" />
                 <span className="font-medium">Poussée de COVID-19</span>
               </div>
-              <p className="mt-1 text-xs text-blue-300">Augmentation significative détectée en Asie du Sud-Est</p>
+              <p className="mt-1 text-xs text-blue-300">
+                Augmentation significative détectée en Asie du Sud-Est
+              </p>
             </div>
           </div>
         </nav>
@@ -111,13 +132,13 @@ const Sidebar: React.FC = () => {
         </div>
 
         <div className="space-y-1">
-          <NavLink 
-            to="/settings" 
-            className={({ isActive }) => 
+          <NavLink
+            to="/settings"
+            className={({ isActive }) =>
               `flex items-center px-4 py-2 text-sm rounded-lg ${
-                isActive 
-                  ? 'bg-blue-800 text-white' 
-                  : 'text-blue-100 hover:bg-blue-800'
+                isActive
+                  ? "bg-blue-800 text-white"
+                  : "text-blue-100 hover:bg-blue-800"
               }`
             }
           >
@@ -125,7 +146,7 @@ const Sidebar: React.FC = () => {
             Paramètres
           </NavLink>
 
-          <button 
+          <button
             onClick={logout}
             className="w-full flex items-center px-4 py-2 text-sm rounded-lg text-blue-100 hover:bg-blue-800"
           >

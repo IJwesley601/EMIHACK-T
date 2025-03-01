@@ -5,11 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "vite --host 0.0.0.0",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.6",
+    "@mui/material": "^6.4.6",
     "axios": "^1.6.2",
     "chart.js": "^4.4.0",
     "date-fns": "^2.30.0",

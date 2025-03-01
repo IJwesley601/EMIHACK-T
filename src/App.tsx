@@ -11,6 +11,7 @@ import Settings from './pages/Settings';
 import { AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DataContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import User from './pages/User';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                             <Route path="/map" element={<MapView />} />
                             <Route path="/data" element={<DataManagement />} />
                             <Route path="/settings" element={<Settings />} />
+                            <Route path="/user" element={<User />} />
                           </Routes>
                         </main>
                       </div>
