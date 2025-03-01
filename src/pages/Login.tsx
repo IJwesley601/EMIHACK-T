@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Activity, LogIn } from 'lucide-react';
+import { 
+  Container, 
+  Box, 
+  Typography, 
+  TextField, 
+  Button, 
+  Paper, 
+  Alert,
+  Link as MuiLink,
+  Modal,
+  Stack
+} from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { Activity, LogIn, UserPlus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Login: React.FC = () => {
@@ -8,8 +20,12 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false); // État pour le modal d'inscription
+  const [signUpEmail, setSignUpEmail] = useState('');
+  const [signUpPassword, setSignUpPassword] = useState('');
+  const [signUpError, setSignUpError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, signUp } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,80 +42,107 @@ const Login: React.FC = () => {
     }
   };
 
+  const handleSignUpSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSignUpError('');
+    setIsLoading(true);
+
+    try {
+      await signUp(signUpEmail, signUpPassword);
+      setIsSignUpModalOpen(false); // Fermer le modal après l'inscription
+      navigate('/');
+    } catch (err) {
+      setSignUpError("Une erreur s'est produite lors de l'inscription");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 to-blue-700 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-8">
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="p-3 bg-blue-100 rounded-full">
-              <Activity className="h-10 w-10 text-blue-600" />
-            </div>
-          </div>
-          <h1 className="text-2xl font-bold text-gray-800">EpiTrack AI</h1>
-          <p className="text-gray-600 mt-1">Plateforme de gestion des épidémies</p>
-        </div>
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Paper
+          elevation={3}
+          sx={{
+            p: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+            <Activity size={32} color="#3f51b5" />
+            <Typography component="h1" variant="h5" sx={{ ml: 1 }}>
+              EpiTrack AI
+            </Typography>
+          </Box>
+          <Typography component="h1" variant="h5">
+            Connexion
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1, mb: 3 }}>
+            Plateforme de gestion des épidémies
+          </Typography>
 
-        {error && (
-          <div className="bg-red-50 text-red-700 p-3 rounded-md mb-6 text-sm">
-            {error}
-          </div>
-        )}
+          {error && (
+            <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
+              {error}
+            </Alert>
+          )}
 
-        <form onSubmit={handleSubmit}>
-          <div className="space-y-6">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Adresse email
-              </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Entrez votre email"
-                required
-              />
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Mot de passe
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Entrez votre mot de passe"
-                required
-              />
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, width: '100%' }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Adresse email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Mot de passe"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <input
                   id="remember-me"
                   type="checkbox"
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+                <Typography variant="body2" sx={{ ml: 1 }}>
                   Se souvenir de moi
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <a href="#" className="text-blue-600 hover:text-blue-500">
-                  Mot de passe oublié ?
-                </a>
-              </div>
-            </div>
-
-            <button
+                </Typography>
+              </Box>
+              <MuiLink href="#" variant="body2" color="primary">
+                Mot de passe oublié ?
+              </MuiLink>
+            </Box>
+            <Button
               type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
               disabled={isLoading}
-              className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               {isLoading ? (
                 <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
@@ -109,17 +152,104 @@ const Login: React.FC = () => {
                   Se connecter
                 </>
               )}
-            </button>
-          </div>
-        </form>
+            </Button>
+          </Box>
 
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-600">
-            Pour des raisons de démonstration, vous pouvez utiliser n'importe quel email et mot de passe
-          </p>
-        </div>
-      </div>
-    </div>
+          <Box sx={{ mt: 3, textAlign: 'center' }}>
+            <Typography variant="body2" color="text.secondary">
+              Pas encore de compte ?{' '}
+              <MuiLink
+                component="button"
+                variant="body2"
+                color="primary"
+                onClick={() => setIsSignUpModalOpen(true)}
+              >
+                S'inscrire
+              </MuiLink>
+            </Typography>
+          </Box>
+        </Paper>
+      </Box>
+
+      {/* Modal d'inscription */}
+      <Modal
+        open={isSignUpModalOpen}
+        onClose={() => setIsSignUpModalOpen(false)}
+        aria-labelledby="modal-signup-title"
+        aria-describedby="modal-signup-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+          }}
+        >
+          <Typography id="modal-signup-title" variant="h6" component="h2" sx={{ mb: 2 }}>
+            <UserPlus size={24} className="mr-2" />
+            S'inscrire
+          </Typography>
+          {signUpError && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {signUpError}
+            </Alert>
+          )}
+          <Box component="form" onSubmit={handleSignUpSubmit} noValidate>
+            <Stack spacing={2}>
+              <TextField
+                required
+                fullWidth
+                id="name"
+                label="Nom complet"
+                name="email"
+                autoComplete="email"
+                value={signUpEmail}
+                onChange={(e) => setSignUpEmail(e.target.value)}
+              />
+              <TextField
+                required
+                fullWidth
+                id="signup-email"
+                label="Adresse email"
+                name="email"
+                autoComplete="email"
+                value={signUpEmail}
+                onChange={(e) => setSignUpEmail(e.target.value)}
+              />
+              <TextField
+                required
+                fullWidth
+                name="password"
+                label="Mot de passe"
+                type="password"
+                id="signup-password"
+                autoComplete="new-password"
+                value={signUpPassword}
+                onChange={(e) => setSignUpPassword(e.target.value)}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+                ) : (
+                  "S'inscrire"
+                )}
+              </Button>
+            </Stack>
+          </Box>
+        </Box>
+      </Modal>
+    </Container>
   );
 };
 

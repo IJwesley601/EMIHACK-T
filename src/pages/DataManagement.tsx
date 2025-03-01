@@ -135,12 +135,12 @@ const DataManagement: React.FC = () => {
   ];
 
   // Fonction pour télécharger les données en Excel
-  // const handleDownloadExcel = (data: any, fileName: string) => {
-  //   const ws = XLSX.utils.json_to_sheet([data]);
-  //   const wb = XLSX.utils.book_new();
-  //   XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-  //   XLSX.writeFile(wb, `${fileName}.xlsx`);
-  // };
+  const handleDownloadExcel = (data: any, fileName: string) => {
+    const ws = XLSX.utils.json_to_sheet([data]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.writeFile(wb, `${fileName}.xlsx`);
+  };
 
   // Fonction pour importer un fichier Excel
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
