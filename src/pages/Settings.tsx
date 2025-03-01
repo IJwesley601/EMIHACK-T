@@ -98,190 +98,189 @@ const Settings = () => {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-2">Paramètres</h1>
-      <p className="text-gray-600 mb-6">Gérez les paramètres et préférences de votre compte</p>
-  
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Paramètres du profil */}
-        <div>
-          <div className="bg-white p-6 rounded-lg shadow mb-6">
-            <div className="flex items-center mb-4">
-              <User className="w-5 h-5" />
-              <h2 className="text-xl font-semibold ml-2">Paramètres du profil</h2>
-            </div>
-            <hr className="mb-4" />
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Nom complet</label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
-                />
+      <div className="p-6">
+        <h1 className="text-3xl font-bold mb-2">Paramètres</h1>
+        <p className="text-gray-600 mb-6">Gérez les paramètres et préférences de votre compte</p>
+    
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Paramètres du profil */}
+          <div>
+            <div className="bg-white p-6 rounded-lg shadow mb-6">
+              <div className="flex items-center mb-4">
+                <User className="w-5 h-5" />
+                <h2 className="text-xl font-semibold ml-2">Paramètres du profil</h2>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Adresse email</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Rôle</label>
-                <input
-                  type="text"
-                  value={user?.role === 'admin' ? 'Administrateur' : 'Personnel médical'}
-                  disabled
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 py-2.5 px-4 text-base"
-                />
-              </div>
-              <button
-                onClick={handleProfileSave}
-                className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-              >
-                <Save className="w-4 h-4 mr-2" />
-                Enregistrer les modifications
-              </button>
-            </div>
-          </div>
-  
-          {/* Paramètres du mot de passe */}
-          <div className="bg-white p-6 rounded-lg shadow mb-6">
-            <div className="flex items-center mb-4">
-              <Lock className="w-5 h-5" />
-              <h2 className="text-xl font-semibold ml-2">Changer le mot de passe</h2>
-            </div>
-            <hr className="mb-4" />
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Mot de passe actuel</label>
-                <input
-                  type="password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Nouveau mot de passe</label>
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Confirmer le nouveau mot de passe</label>
-                <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
-                />
-              </div>
-              <button
-                onClick={handlePasswordSave}
-                className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-              >
-                <Save className="w-4 h-4 mr-2" />
-                Mettre à jour le mot de passe
-              </button>
-            </div>
-          </div>
-        </div>
-  
-        {/* Paramètres de notification */}
-        <div>
-          <div className="bg-white p-6 rounded-lg shadow mb-6">
-            <div className="flex items-center mb-4">
-              <Bell className="w-5 h-5" />
-              <h2 className="text-xl font-semibold ml-2">Paramètres de notification</h2>
-            </div>
-            <hr className="mb-4" />
-            
-            <div className="space-y-4">
-              <div>
-                <label className="flex items-center">
+              <hr className="mb-4" />
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Nom complet</label>
                   <input
-                    type="checkbox"
-                    checked={emailNotifications}
-                    onChange={(e) => setEmailNotifications(e.target.checked)}
-                    className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
                   />
-                  <span className="ml-2">Notifications par email</span>
-                </label>
-                <p className="text-sm text-gray-500 ml-6">
-                  Recevez des alertes par email pour les mises à jour importantes et les dépassements de seuil
-                </p>
-              </div>
-              <div>
-                <label className="flex items-center">
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Adresse email</label>
                   <input
-                    type="checkbox"
-                    checked={pushNotifications}
-                    onChange={(e) => setPushNotifications(e.target.checked)}
-                    className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
                   />
-                  <span className="ml-2">Notifications push</span>
-                </label>
-                <p className="text-sm text-gray-500 ml-6">
-                  Recevez des notifications push en temps réel
-                </p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Seuil d'alerte</label>
-                <select
-                  value={alertThreshold}
-                  onChange={handleAlertThresholdChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Rôle</label>
+                  <input
+                    type="text"
+                    value={user?.role === 'admin' ? 'Administrateur' : 'Personnel médical'}
+                    disabled
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 py-2.5 px-4 text-base"
+                  />
+                </div>
+                <button
+                  onClick={handleProfileSave}
+                  className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
                 >
-                  <option value="low">Faible (Notifier pour tous les changements)</option>
-                  <option value="medium">Moyen (Notifier pour les changements significatifs)</option>
-                  <option value="high">Élevé (Notifier uniquement pour les changements critiques)</option>
-                </select>
+                  <Save className="w-4 h-4 mr-2" />
+                  Enregistrer les modifications
+                </button>
               </div>
-              <button
-                onClick={handleNotificationsSave}
-                className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-              >
-                <Save className="w-4 h-4 mr-2" />
-                Enregistrer les paramètres de notification
-              </button>
+            </div>
+    
+            {/* Paramètres du mot de passe */}
+            <div className="bg-white p-6 rounded-lg shadow mb-6">
+              <div className="flex items-center mb-4">
+                <Lock className="w-5 h-5" />
+                <h2 className="text-xl font-semibold ml-2">Changer le mot de passe</h2>
+              </div>
+              <hr className="mb-4" />
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Mot de passe actuel</label>
+                  <input
+                    type="password"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Nouveau mot de passe</label>
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Confirmer le nouveau mot de passe</label>
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
+                  />
+                </div>
+                <button
+                  onClick={handlePasswordSave}
+                  className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                >
+                  <Save className="w-4 h-4 mr-2" />
+                  Mettre à jour le mot de passe
+                </button>
+              </div>
             </div>
           </div>
-  
-          {/* Paramètres des données */}
-          <div className="bg-white p-6 rounded-lg shadow mb-6">
-            <div className="flex items-center mb-4">
-              <Database className="w-5 h-5" />
-              <h2 className="text-xl font-semibold ml-2">Paramètres des données</h2>
-            </div>
-            <hr className="mb-4" />
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Intervalle de rafraîchissement des données</label>
-                <select
-                  value={dataRefreshInterval}
-                  onChange={handleDataRefreshIntervalChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
-                >
-                  <option value="15">Toutes les 15 minutes</option>
-                  <option value="30">Toutes les 30 minutes</option>
-                  <option value="60">Toutes les heures</option>
-                  <option value="360">Toutes les 6 heures</option>
-                  <option value="720">Toutes les 12 heures</option>
-                  <option value="1440">Toutes les 24 heures</option>
-                </select>
+    
+          {/* Paramètres de notification */}
+          <div>
+            <div className="bg-white p-6 rounded-lg shadow mb-6">
+              <div className="flex items-center mb-4">
+                <Bell className="w-5 h-5" />
+                <h2 className="text-xl font-semibold ml-2">Paramètres de notification</h2>
               </div>
-             
+              <hr className="mb-4" />
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={emailNotifications}
+                      onChange={(e) => setEmailNotifications(e.target.checked)}
+                      className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    />
+                    <span className="ml-2">Notifications par email</span>
+                  </label>
+                  <p className="text-sm text-gray-500 ml-6">
+                    Recevez des alertes par email pour les mises à jour importantes et les dépassements de seuil
+                  </p>
+                </div>
+                <div>
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={pushNotifications}
+                      onChange={(e) => setPushNotifications(e.target.checked)}
+                      className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    />
+                    <span className="ml-2">Notifications push</span>
+                  </label>
+                  <p className="text-sm text-gray-500 ml-6">
+                    Recevez des notifications push en temps réel
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Seuil d'alerte</label>
+                  <select
+                    value={alertThreshold}
+                    onChange={handleAlertThresholdChange}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
+                  >
+                    <option value="low">Faible (Notifier pour tous les changements)</option>
+                    <option value="medium">Moyen (Notifier pour les changements significatifs)</option>
+                    <option value="high">Élevé (Notifier uniquement pour les changements critiques)</option>
+                  </select>
+                </div>
+                <button
+                  onClick={handleNotificationsSave}
+                  className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                >
+                  <Save className="w-4 h-4 mr-2" />
+                  Enregistrer les paramètres de notification
+                </button>
+              </div>
+            </div>
+    
+            {/* Paramètres des données */}
+            <div className="bg-white p-6 rounded-lg shadow mb-6">
+              <div className="flex items-center mb-4">
+                <Database className="w-5 h-5" />
+                <h2 className="text-xl font-semibold ml-2">Paramètres des données</h2>
+              </div>
+              <hr className="mb-4" />
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Intervalle de rafraîchissement des données</label>
+                  <select
+                    value={dataRefreshInterval}
+                    onChange={handleDataRefreshIntervalChange}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2.5 px-4 text-base"
+                  >
+                    <option value="15">Toutes les 15 minutes</option>
+                    <option value="30">Toutes les 30 minutes</option>
+                    <option value="60">Toutes les heures</option>
+                    <option value="360">Toutes les 6 heures</option>
+                    <option value="720">Toutes les 12 heures</option>
+                    <option value="1440">Toutes les 24 heures</option>
+                  </select>
+                </div>
               <div className="flex space-x-4">
                 <button
                   className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
@@ -293,7 +292,7 @@ const Settings = () => {
                   onClick={handleDataSettingsSave}
                   className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
                 >
-                  <Save className="w-5 h-5 mr-2" />
+                  <Save className="w-4 h-4 mr-2" />
                   Enregistrer les paramètres des données
                 </button>
               </div>
