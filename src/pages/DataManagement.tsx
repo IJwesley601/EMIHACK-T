@@ -8,7 +8,7 @@ const DataManagement: React.FC = () => {
   const { countriesData, diseases, selectedDisease, loading, refreshData } = useData();
   const [activeTab, setActiveTab] = useState<'countries' | 'sources'>('countries');
   const [filterRegion, setFilterRegion] = useState<string>('all');
-<<<<<<< HEAD
+// <<<<<<< HEAD
   const [file, setFile] = useState<File | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +42,7 @@ const DataManagement: React.FC = () => {
       console.error("Erreur lors de l'upload du fichier CSV :", error);
       }
   };
-=======
+// =======
   const [advancedFilters, setAdvancedFilters] = useState({
     minCases: 0,
     maxCases: Infinity,
@@ -50,7 +50,7 @@ const DataManagement: React.FC = () => {
     maxDeaths: Infinity,
   });
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
->>>>>>> 298b35606d40dc0d6b2c1e66b40125f2899116dc
+// >>>>>>> 298b35606d40dc0d6b2c1e66b40125f2899116dc
 
   // Données sources fictives
   const dataSources = [
