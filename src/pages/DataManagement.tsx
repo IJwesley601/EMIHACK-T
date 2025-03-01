@@ -7,6 +7,39 @@ const DataManagement: React.FC = () => {
   const { countriesData, diseases, selectedDisease, loading } = useData();
   const [activeTab, setActiveTab] = useState<'countries' | 'sources'>('countries');
   const [filterRegion, setFilterRegion] = useState<string>('all');
+  const [file, setFile] = useState<File | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setFile(event.target.files[0]);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (!file) {
+      alert("Veuillez sélectionner un fichier CSV");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('http://localhost:3000/sources/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert("Fichier CSV uploadé avec succès");
+        // Vous pouvez recharger les sources ici si nécessaire
+      } else {
+        alert("Erreur lors de l'upload du fichier CSV");
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'upload du fichier CSV :", error);
+      }
+  };
 
   // Données sources fictives
   const dataSources = [
