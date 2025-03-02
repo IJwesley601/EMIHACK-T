@@ -18,9 +18,7 @@ const DataManagement: React.FC = () => {
     refreshData,
   } = useData();
 
-  const [activeTab, setActiveTab] = useState<"countries" | "sources">(
-    "countries"
-  );
+  const [activeTab, setActiveTab] = useState<"countries" | "sources">("countries");
   const [filterRegion, setFilterRegion] = useState<string>("all");
   const [file, setFile] = useState<File | null>(null);
   const [advancedFilters, setAdvancedFilters] = useState({
@@ -30,6 +28,8 @@ const DataManagement: React.FC = () => {
     maxDeaths: Infinity,
   });
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [dataSources, setDataSources] = useState<any[]>([]);
 
   // Colonnes pour le tableau des pays
   const countriesColumns = [
@@ -40,7 +40,7 @@ const DataManagement: React.FC = () => {
       render: (value: string, row: any) => (
         <div className="flex items-center">
           <img
-            src={row.countryInfo.flag}
+            src={row.countryInfo?.flag}
             alt={`${value} flag`}
             className="h-4 w-6 mr-2"
           />
@@ -48,30 +48,10 @@ const DataManagement: React.FC = () => {
         </div>
       ),
     },
-    {
-      key: "cases",
-      label: "Cas totaux",
-      sortable: true,
-      render: (value: number) => value.toLocaleString(),
-    },
-    {
-      key: "active",
-      label: "Cas actifs",
-      sortable: true,
-      render: (value: number) => value.toLocaleString(),
-    },
-    {
-      key: "deaths",
-      label: "Décès",
-      sortable: true,
-      render: (value: number) => value.toLocaleString(),
-    },
-    {
-      key: "recovered",
-      label: "Rétablis",
-      sortable: true,
-      render: (value: number) => value.toLocaleString(),
-    },
+    { key: "cases", label: "Cas totaux", sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: "active", label: "Cas actifs", sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: "deaths", label: "Décès", sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: "recovered", label: "Rétablis", sortable: true, render: (value: number) => value.toLocaleString() },
     {
       key: "actions",
       label: "Actions",
@@ -88,6 +68,7 @@ const DataManagement: React.FC = () => {
     },
   ];
 
+<<<<<<< HEAD
   // Récupérer les sources de données depuis l'API
   const [dataSources, setDataSources] = useState<any[]>([]);
   useEffect(() => {
@@ -117,6 +98,8 @@ const DataManagement: React.FC = () => {
     fetchDataSources();
   }, []);
 
+=======
+>>>>>>> 5dacdcdb756bd0a8649eba852eb2663ac15fa0bf
   // Colonnes pour le tableau des sources de données
   const sourcesColumns = [
     { key: "nom", label: "Nom de la source", sortable: true },
@@ -125,19 +108,39 @@ const DataManagement: React.FC = () => {
       key: "derniereMiseAJour",
       label: "Dernière mise à jour",
       sortable: true,
-      render: (value: Date) => new Date(value).toLocaleDateString(), // Formater la date
+      render: (value: Date) => new Date(value).toLocaleDateString(),
     },
     { key: "frequence", label: "Fréquence de mise à jour", sortable: true },
   ];
 
-  const [isUploading, setIsUploading] = useState(false);
+  // Récupérer les sources de données depuis l'API
+  useEffect(() => {
+    const fetchDataSources = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.log("Token manquant. Veuillez vous connecter.");
+          return;
+        }
+        const response = await axios.get("http://localhost:3000/api/sources", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setDataSources(response.data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des sources de données:", error);
+      }
+    };
+
+    fetchDataSources();
+  }, []);
+
   // Fonction pour importer un fichier Excel
-  const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const uploadedFile = event.target.files?.[0];
     if (uploadedFile) {
-      setIsUploading(true); // Activer la barre de progression
+      setIsUploading(true);
       setFile(uploadedFile);
 
       const formData = new FormData();
@@ -148,8 +151,6 @@ const DataManagement: React.FC = () => {
 
       try {
         const token = localStorage.getItem("token");
-
-        // Vérifier si le token existe
         if (!token) {
           console.log("Token manquant. Veuillez vous connecter.");
           return;
@@ -161,24 +162,27 @@ const DataManagement: React.FC = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+
         // Rafraîchir la liste des sources de données
-        const updatedSources = await axios.get(
-          "http://localhost:3000/api/sources",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // Ajouter le token dans les headers
-            },
-          }
-        );
+        const updatedSources = await axios.get("http://localhost:3000/api/sources", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setDataSources(updatedSources.data);
       } catch (error) {
         console.error("Erreur lors de l'upload:", error);
         alert("Erreur lors de l'upload du fichier");
       } finally {
+<<<<<<< HEAD
         setIsUploading(false); // Désactiver la barre de progression
+=======
+        setIsUploading(false);
+>>>>>>> 5dacdcdb756bd0a8649eba852eb2663ac15fa0bf
       }
     }
   };
+
   // Fonction pour appliquer les filtres avancés
   const applyAdvancedFilters = (data: any[]) => {
     return data.filter((item) => {
@@ -215,52 +219,21 @@ const DataManagement: React.FC = () => {
     }
   };
 
-  // Appliquer les filtres régionaux et avancés
+  const regionFilters = {
+    asia: ["China", "India", "Japan", "South Korea", "Vietnam", "Thailand"],
+    europe: ["Germany", "France", "UK", "Italy", "Spain", "Netherlands"],
+    americas: ["USA", "Canada", "Brazil", "Mexico", "Argentina", "Colombia"],
+    africa: ["South Africa", "Nigeria", "Egypt", "Morocco", "Kenya", "Ethiopia"],
+  };
+
+  const rawData = getFilteredData();
   const filteredData = applyAdvancedFilters(
     filterRegion === "all"
-      ? getFilteredData()
-      : getFilteredData().filter((item) => {
-          if (selectedDisease === "covid-19") {
-            // Filtrage pour COVID-19
-            if (filterRegion === "asia") {
-              return [
-                "China",
-                "India",
-                "Japan",
-                "South Korea",
-                "Vietnam",
-                "Thailand",
-              ].includes(item.country);
-            } else if (filterRegion === "europe") {
-              return [
-                "Germany",
-                "France",
-                "UK",
-                "Italy",
-                "Spain",
-                "Netherlands",
-              ].includes(item.country);
-            } else if (filterRegion === "americas") {
-              return [
-                "USA",
-                "Canada",
-                "Brazil",
-                "Mexico",
-                "Argentina",
-                "Colombia",
-              ].includes(item.country);
-            } else if (filterRegion === "africa") {
-              return [
-                "South Africa",
-                "Nigeria",
-                "Egypt",
-                "Morocco",
-                "Kenya",
-                "Ethiopia",
-              ].includes(item.country);
-            }
+      ? rawData
+      : rawData.filter((item) => {
+          if (selectedDisease === "covid-19" && regionFilters[filterRegion]) {
+            return regionFilters[filterRegion].includes(item.country);
           } else if (selectedDisease === "influenza") {
-            // Filtrage pour Influenza
             return item.region === filterRegion;
           }
           return true;
@@ -278,12 +251,8 @@ const DataManagement: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-800">
-          Gestion des données
-        </h1>
-        <p className="text-gray-600">
-          Gérez et exportez les données épidémiques
-        </p>
+        <h1 className="text-2xl font-bold text-gray-800">Gestion des données</h1>
+        <p className="text-gray-600">Gérez et exportez les données épidémiques</p>
       </div>
 
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -324,10 +293,7 @@ const DataManagement: React.FC = () => {
               <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
                 <div className="flex items-center space-x-4">
                   <div>
-                    <label
-                      htmlFor="disease-filter"
-                      className="block text-sm text-gray-600 mb-1"
-                    >
+                    <label htmlFor="disease-filter" className="block text-sm text-gray-600 mb-1">
                       Maladie
                     </label>
                     <select
@@ -345,10 +311,7 @@ const DataManagement: React.FC = () => {
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="region-filter"
-                      className="block text-sm text-gray-600 mb-1"
-                    >
+                    <label htmlFor="region-filter" className="block text-sm text-gray-600 mb-1">
                       Région
                     </label>
                     <select
@@ -369,9 +332,7 @@ const DataManagement: React.FC = () => {
                 <div className="flex space-x-3">
                   <button
                     className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700"
-                    onClick={() =>
-                      handleDownloadExcel(filteredData, "donnees_pays")
-                    }
+                    onClick={() => handleDownloadExcel(filteredData, "donnees_pays")}
                   >
                     <Download className="h-4 w-4 mr-2" />
                     Exporter les données
@@ -386,11 +347,7 @@ const DataManagement: React.FC = () => {
                 </div>
               </div>
 
-              <DataTable
-                title="Données des pays"
-                data={filteredData}
-                columns={countriesColumns}
-              />
+              <DataTable title="Données des pays" data={filteredData} columns={countriesColumns} />
             </>
           )}
 
@@ -409,11 +366,7 @@ const DataManagement: React.FC = () => {
                   />
                 </label>
               </div>
-              <DataTable
-                title="Sources de données"
-                data={dataSources}
-                columns={sourcesColumns}
-              />
+              <DataTable title="Sources de données" data={dataSources} columns={sourcesColumns} />
             </>
           )}
         </div>
@@ -425,9 +378,7 @@ const DataManagement: React.FC = () => {
             <h3 className="text-lg font-bold mb-4">Filtres avancés</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm text-gray-600">
-                  Cas minimum
-                </label>
+                <label className="block text-sm text-gray-600">Cas minimum</label>
                 <input
                   type="number"
                   className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -441,9 +392,7 @@ const DataManagement: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-600">
-                  Cas maximum
-                </label>
+                <label className="block text-sm text-gray-600">Cas maximum</label>
                 <input
                   type="number"
                   className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -457,9 +406,7 @@ const DataManagement: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-600">
-                  Décès minimum
-                </label>
+                <label className="block text-sm text-gray-600">Décès minimum</label>
                 <input
                   type="number"
                   className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -473,9 +420,7 @@ const DataManagement: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-600">
-                  Décès maximum
-                </label>
+                <label className="block text-sm text-gray-600">Décès maximum</label>
                 <input
                   type="number"
                   className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -523,9 +468,7 @@ const DataManagement: React.FC = () => {
               className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center"
             >
               <CircularProgress size={60} thickness={4} className="mb-4" />
-              <p className="text-lg font-medium text-gray-700">
-                Importation en cours...
-              </p>
+              <p className="text-lg font-medium text-gray-700">Importation en cours...</p>
             </motion.div>
           </motion.div>
         )}
