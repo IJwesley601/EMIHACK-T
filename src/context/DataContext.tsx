@@ -77,13 +77,38 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [timeRange, setTimeRange] = useState<string>('30');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  // const [selectedDisease, setSelectedDisease] = useState('covid-19');
+  // const [predictions, setPredictions] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  const diseases1 = [
+    { id: 'covid-19', name: 'COVID-19' },
+    { id: 'influenza', name: 'Influenza' },
+    // Ajoutez d'autres maladies ici
+  ];
+
+  const refreshData1 = async () => {
+    setLoading(true);
+    // Simuler une requête API pour obtenir les prédictions
+    const fakePredictions = Array.from({ length: 30 }, (_, i) => ({
+      date: new Date(Date.now() + i * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      predictedCases: Math.floor(Math.random() * 1000),
+      confidence: Math.random(),
+    }));
+    setTimeout(() => {
+      setPredictions(fakePredictions);
+      setLoading(false);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    refreshData();
+  }, [selectedDisease]);
 
   const fetchCovidData = async () => {
     const countriesResponse = await axios.get('https://disease.sh/v3/covid-19/countries');
     const timelineResponse = await axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=all');
     return { countriesResponse, timelineResponse };
   };
-
  
 
   const fetchInfluenzaData = async () => {
@@ -297,6 +322,21 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      if (selectedDisease === 'covid-19') {
+        await fetchCovidData();
+      } else if (selectedDisease === 'influenza') {
+        await fetchInfluenzaData();
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [selectedDisease]);
+
+
   const refreshData = async () => {
     await fetchData();
   };
@@ -318,6 +358,9 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         loading,
         error,
         refreshData,
+        refreshData1,
+        diseases1,
+        
       }}
     >
       {children}
