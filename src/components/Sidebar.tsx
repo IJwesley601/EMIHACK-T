@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -14,7 +14,12 @@ import {
 import { useAuth } from "../context/AuthContext";
 
 const Sidebar: React.FC = () => {
-  const { logout, user } = useAuth();
+  const { logout} = useAuth();
+
+  const [user, setUser] = useState<any | null>(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
   return (
     <div className="bg-blue-900 text-white w-64 flex flex-col h-screen">
@@ -123,10 +128,9 @@ const Sidebar: React.FC = () => {
       <div className="p-4 border-t border-blue-800">
         <div className="flex items-center mb-4 px-4">
           <div className="h-8 w-8 rounded-full bg-blue-700 flex items-center justify-center text-sm font-medium">
-            {user?.name.charAt(0).toUpperCase()}
           </div>
           <div className="ml-3">
-            <p className="text-sm font-medium">{user?.name}</p>
+            <p className="text-sm font-medium">{user?.nom}</p>
             <p className="text-xs text-blue-300 capitalize">{user?.role}</p>
           </div>
         </div>

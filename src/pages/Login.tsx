@@ -1,42 +1,42 @@
-import React, { useState } from 'react';
-import { 
-  Container, 
-  Box, 
-  Typography, 
-  TextField, 
-  Button, 
-  Paper, 
+import React, { useState } from "react";
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Paper,
   Alert,
   Link as MuiLink,
   Modal,
-  Stack
-} from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
-import { Activity, LogIn, UserPlus } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+  Stack,
+} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { Activity, LogIn, UserPlus } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false); // État pour le modal d'inscription
-  const [signUpEmail, setSignUpEmail] = useState('');
-  const [signUpPassword, setSignUpPassword] = useState('');
-  const [signUpError, setSignUpError] = useState('');
+  const [signUpEmail, setSignUpEmail] = useState("");
+  const [signUpPassword, setSignUpPassword] = useState("");
+  const [signUpError, setSignUpError] = useState("");
   const navigate = useNavigate();
-  const { login, signUp } = useAuth();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
       await login(email, password);
-      navigate('/');
+      navigate("/");
     } catch (err) {
-      setError('Email ou mot de passe invalide');
+      setError("Email ou mot de passe invalide");
     } finally {
       setIsLoading(false);
     }
@@ -44,13 +44,13 @@ const Login: React.FC = () => {
 
   const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSignUpError('');
+    setSignUpError("");
     setIsLoading(true);
 
     try {
       await signUp(signUpEmail, signUpPassword);
       setIsSignUpModalOpen(false); // Fermer le modal après l'inscription
-      navigate('/');
+      navigate("/");
     } catch (err) {
       setSignUpError("Une erreur s'est produite lors de l'inscription");
     } finally {
@@ -63,22 +63,22 @@ const Login: React.FC = () => {
       <Box
         sx={{
           marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
         <Paper
           elevation={3}
           sx={{
             p: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: '100%',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "100%",
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+          <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
             <Activity size={32} color="#3f51b5" />
             <Typography component="h1" variant="h5" sx={{ ml: 1 }}>
               EpiTrack AI
@@ -87,17 +87,26 @@ const Login: React.FC = () => {
           <Typography component="h1" variant="h5">
             Connexion
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1, mb: 3 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ mt: 1, mb: 3 }}
+          >
             Plateforme de gestion des épidémies
           </Typography>
 
           {error && (
-            <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
+            <Alert severity="error" sx={{ width: "100%", mb: 2 }}>
               {error}
             </Alert>
           )}
 
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, width: '100%' }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1, width: "100%" }}
+          >
             <TextField
               margin="normal"
               required
@@ -122,8 +131,15 @@ const Login: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                mt: 2,
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center" }}>
                 <input
                   id="remember-me"
                   type="checkbox"
@@ -155,9 +171,9 @@ const Login: React.FC = () => {
             </Button>
           </Box>
 
-          <Box sx={{ mt: 3, textAlign: 'center' }}>
+          <Box sx={{ mt: 3, textAlign: "center" }}>
             <Typography variant="body2" color="text.secondary">
-              Pas encore de compte ?{' '}
+              Pas encore de compte ?{" "}
               <MuiLink
                 component="button"
                 variant="body2"
@@ -180,18 +196,23 @@ const Login: React.FC = () => {
       >
         <Box
           sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
             width: 400,
-            bgcolor: 'background.paper',
+            bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
             borderRadius: 2,
           }}
         >
-          <Typography id="modal-signup-title" variant="h6" component="h2" sx={{ mb: 2 }}>
+          <Typography
+            id="modal-signup-title"
+            variant="h6"
+            component="h2"
+            sx={{ mb: 2 }}
+          >
             <UserPlus size={24} className="mr-2" />
             S'inscrire
           </Typography>

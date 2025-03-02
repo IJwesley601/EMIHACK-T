@@ -1,7 +1,8 @@
+import axios from 'axios';
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: 'admin' | 'doctor' | 'analyst';
@@ -30,23 +31,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(false);
   }, []);
 
+  
   const login = async (email: string, password: string) => {
     try {
       setLoading(true);
-      // In a real app, this would be an API call
-      // For demo purposes, we'll simulate a successful login
-      const mockUser: User = {
-        id: '1',
-        name: email.split('@')[0],
-        email,
-        role: 'admin',
-      };
-      
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
+
+      // Appel à l'API de login
+      const response = await axios.post(
+        "http://localhost:3000/api/users/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      // Extraire les données de la réponse
+      const { token, user } = response.data;
+
+      // Stocker le token dans le localStorage
+      localStorage.setItem("token", token);
+
+      // Stocker les informations de l'utilisateur dans le state et le localStorage
+      setUser(user);
+      localStorage.setItem("user", JSON.stringify(user));
     } catch (error) {
-      console.error('Login failed:', error);
-      throw error;
+      console.error("Login failed:", error);
+      throw error; // Propager l'erreur pour la gérer dans le composant
     } finally {
       setLoading(false);
     }
