@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import DataTable from "../components/DataTable";
 import { useData } from "../context/DataContext";
@@ -7,13 +6,6 @@ import * as XLSX from "xlsx";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
-=======
-import React, { useState } from 'react';
-import DataTable from '../components/DataTable';
-import { useData } from '../context/DataContext';
-import { Database, Upload, Download, RefreshCw, Filter } from 'lucide-react';
-import * as XLSX from 'xlsx';
->>>>>>> 1793d97b38b421b12f9ec1ca5678e4966cae9c60
 
 const DataManagement: React.FC = () => {
   const {
@@ -96,7 +88,6 @@ const DataManagement: React.FC = () => {
     },
   ];
 
-<<<<<<< HEAD
   // Récupérer les sources de données depuis l'API
   const [dataSources, setDataSources] = useState<any[]>([]);
   useEffect(() => {
@@ -185,28 +176,6 @@ const DataManagement: React.FC = () => {
         alert("Erreur lors de l'upload du fichier");
       } finally {
         setIsUploading(false); // Désactiver la barre de progression
-=======
-  // Fonction pour gérer l'upload de fichier
-  const handleUpload = async () => {
-    if (!file) {
-      alert('Veuillez sélectionner un fichier CSV');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const response = await fetch('http://localhost:3000/sources/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (response.ok) {
-        alert('Fichier CSV uploadé avec succès');
-      } else {
-        alert("Erreur lors de l'upload du fichier CSV");
->>>>>>> 1793d97b38b421b12f9ec1ca5678e4966cae9c60
       }
     }
   };
@@ -231,7 +200,7 @@ const DataManagement: React.FC = () => {
   const handleDownloadExcel = (data: any[], fileName: string) => {
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
     XLSX.writeFile(wb, `${fileName}.xlsx`);
   };
 
@@ -294,117 +263,9 @@ const DataManagement: React.FC = () => {
             // Filtrage pour Influenza
             return item.region === filterRegion;
           }
-<<<<<<< HEAD
           return true;
         })
   );
-=======
-        } else if (selectedDisease === 'influenza') {
-          // Filtrage pour Influenza
-          return item.region === filterRegion;
-        }
-        return true;
-      })
-);
-
-  // Colonnes pour le tableau des pays
-  const countriesColumns = [
-    {
-      key: 'country',
-      label: 'Pays',
-      sortable: true,
-      render: (value: string, row: any) => (
-        <div className="flex items-center">
-          <img
-            src={row.countryInfo?.flag} // URL du drapeau
-            alt={`${value} flag`}
-            className="h-4 w-6 mr-2"
-          />
-          <span>{value}</span>
-        </div>
-      ),
-    },
-    { key: 'cases', label: 'Cas totaux', sortable: true, render: (value: number) => value.toLocaleString() },
-    { key: 'deaths', label: 'Décès', sortable: true, render: (value: number) => value.toLocaleString() },
-    { key: 'recovered', label: 'Rétablis', sortable: true, render: (value: number) => value.toLocaleString() },
-    { key: 'active', label: 'Cas actifs', sortable: true, render: (value: number) => value.toLocaleString() },
-    {
-      key: 'actions',
-      label: 'Actions',
-      render: (row: any) => (
-        <div className="flex space-x-2">
-          <button
-            className="p-1 text-green-600 hover:text-green-800"
-            onClick={handleRefresh}
-          >
-            <RefreshCw className="h-4 w-4" />
-          </button>
-        </div>
-      ),
-    },
-  ];
-
-  // Colonnes pour le tableau des sources de données
-  const sourcesColumns = [
-    { key: 'name', label: 'Nom de la source', sortable: true },
-    { key: 'type', label: 'Type', sortable: true },
-    { key: 'lastUpdate', label: 'Dernière mise à jour', sortable: true },
-    { key: 'frequency', label: 'Fréquence de mise à jour', sortable: true },
-    {
-      key: 'status',
-      label: 'Statut',
-      sortable: true,
-      render: (value: string) => (
-        <span
-          className={`px-2 py-1 rounded-full text-xs ${
-            value === 'Actif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-          }`}
-        >
-          {value}
-        </span>
-      ),
-    },
-    {
-      key: 'actions',
-      label: 'Actions',
-      render: () => (
-        <div className="flex space-x-2">
-          <button className="p-1 text-green-600 hover:text-green-800">
-            <RefreshCw className="h-4 w-4" />
-          </button>
-        </div>
-      ),
-    },
-  ];
-
-  // Données sources fictives
-  const dataSources = [
-    {
-      id: 1,
-      name: "Tableau de bord COVID-19 de l'OMS",
-      type: 'API',
-      lastUpdate: '2023-05-15',
-      status: 'Actif',
-      frequency: 'Quotidien',
-    },
-    {
-      id: 2,
-      name: 'Données sur la grippe du CDC',
-      type: 'Import CSV',
-      lastUpdate: '2023-05-10',
-      status: 'Actif',
-      frequency: 'Hebdomadaire',
-    },
-    {
-      id: 3,
-      name: "Veille épidémique de l'ECDC",
-      type: 'API',
-      lastUpdate: '2023-05-14',
-      status: 'Actif',
-      frequency: 'Quotidien',
-    },
-  ];
->>>>>>> 1793d97b38b421b12f9ec1ca5678e4966cae9c60
 
   if (loading) {
     return (
