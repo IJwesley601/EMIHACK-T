@@ -4,7 +4,6 @@ import { useData } from '../context/DataContext';
 import { Database, Upload, Download, RefreshCw, Filter } from 'lucide-react';
 import * as XLSX from 'xlsx';
 
-
 const DataManagement: React.FC = () => {
   const {
     diseases,
@@ -37,7 +36,7 @@ const DataManagement: React.FC = () => {
   // Fonction pour gérer l'upload de fichier
   const handleUpload = async () => {
     if (!file) {
-      alert("Veuillez sélectionner un fichier CSV");
+      alert('Veuillez sélectionner un fichier CSV');
       return;
     }
 
@@ -51,7 +50,7 @@ const DataManagement: React.FC = () => {
       });
 
       if (response.ok) {
-        alert("Fichier CSV uploadé avec succès");
+        alert('Fichier CSV uploadé avec succès');
       } else {
         alert("Erreur lors de l'upload du fichier CSV");
       }
@@ -81,7 +80,7 @@ const DataManagement: React.FC = () => {
   const handleDownloadExcel = (data: any[], fileName: string) => {
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, `${fileName}.xlsx`);
   };
 
@@ -120,43 +119,42 @@ const DataManagement: React.FC = () => {
         })
   );
 
-
-    // Colonnes pour le tableau des pays
-    const countriesColumns = [
-      {
-        key: 'country',
-        label: 'Pays',
-        sortable: true,
-        render: (value: string, row: any) => (
-          <div className="flex items-center">
-            <img
-              src={row.countryInfo?.flag} // URL du drapeau
-              alt={`${value} flag`}
-              className="h-4 w-6 mr-2"
-            />
-            <span>{value}</span>
-          </div>
-        ),
-      },
-      { key: 'cases', label: 'Cas totaux', sortable: true, render: (value: number) => value.toLocaleString() },
-      { key: 'deaths', label: 'Décès', sortable: true, render: (value: number) => value.toLocaleString() },
-      { key: 'recovered', label: 'Rétablis', sortable: true, render: (value: number) => value.toLocaleString() },
-      { key: 'active', label: 'Cas actifs', sortable: true, render: (value: number) => value.toLocaleString() },
-      {
-        key: 'actions',
-        label: 'Actions',
-        render: (row: any) => (
-          <div className="flex space-x-2">
-            <button
-              className="p-1 text-green-600 hover:text-green-800"
-              onClick={handleRefresh}
-            >
-              <RefreshCw className="h-4 w-4" />
-            </button>
-          </div>
-        ),
-      },
-    ];
+  // Colonnes pour le tableau des pays
+  const countriesColumns = [
+    {
+      key: 'country',
+      label: 'Pays',
+      sortable: true,
+      render: (value: string, row: any) => (
+        <div className="flex items-center">
+          <img
+            src={row.countryInfo?.flag} // URL du drapeau
+            alt={`${value} flag`}
+            className="h-4 w-6 mr-2"
+          />
+          <span>{value}</span>
+        </div>
+      ),
+    },
+    { key: 'cases', label: 'Cas totaux', sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: 'deaths', label: 'Décès', sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: 'recovered', label: 'Rétablis', sortable: true, render: (value: number) => value.toLocaleString() },
+    { key: 'active', label: 'Cas actifs', sortable: true, render: (value: number) => value.toLocaleString() },
+    {
+      key: 'actions',
+      label: 'Actions',
+      render: (row: any) => (
+        <div className="flex space-x-2">
+          <button
+            className="p-1 text-green-600 hover:text-green-800"
+            onClick={handleRefresh}
+          >
+            <RefreshCw className="h-4 w-4" />
+          </button>
+        </div>
+      ),
+    },
+  ];
 
   // Colonnes pour le tableau des sources de données
   const sourcesColumns = [
@@ -169,9 +167,11 @@ const DataManagement: React.FC = () => {
       label: 'Statut',
       sortable: true,
       render: (value: string) => (
-        <span className={`px-2 py-1 rounded-full text-xs ${
-          value === 'Actif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-        }`}>
+        <span
+          className={`px-2 py-1 rounded-full text-xs ${
+            value === 'Actif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+          }`}
+        >
           {value}
         </span>
       ),
@@ -179,7 +179,7 @@ const DataManagement: React.FC = () => {
     {
       key: 'actions',
       label: 'Actions',
-      render: (row: any) => (
+      render: () => (
         <div className="flex space-x-2">
           <button className="p-1 text-green-600 hover:text-green-800">
             <RefreshCw className="h-4 w-4" />
@@ -193,7 +193,7 @@ const DataManagement: React.FC = () => {
   const dataSources = [
     {
       id: 1,
-      name: 'Tableau de bord COVID-19 de l\'OMS',
+      name: "Tableau de bord COVID-19 de l'OMS",
       type: 'API',
       lastUpdate: '2023-05-15',
       status: 'Actif',
@@ -209,25 +209,9 @@ const DataManagement: React.FC = () => {
     },
     {
       id: 3,
-      name: 'Veille épidémique de l\'ECDC',
+      name: "Veille épidémique de l'ECDC",
       type: 'API',
       lastUpdate: '2023-05-14',
-      status: 'Actif',
-      frequency: 'Quotidien',
-    },
-    {
-      id: 4,
-      name: 'Université Johns Hopkins',
-      type: 'API',
-      lastUpdate: '2023-05-15',
-      status: 'Actif',
-      frequency: 'Quotidien',
-    },
-    {
-      id: 5,
-      name: 'Our World in Data',
-      type: 'Import CSV',
-      lastUpdate: '2023-05-12',
       status: 'Actif',
       frequency: 'Quotidien',
     },
