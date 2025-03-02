@@ -9,6 +9,7 @@ const Dashboard: React.FC = () => {
   const { 
     diseases, 
     countriesData, 
+    influenzaData, 
     globalTimeline, 
     selectedDisease,
     loading
@@ -42,6 +43,9 @@ const Dashboard: React.FC = () => {
     { key: 'deaths', label: 'Décès', sortable: true, render: (value: number) => value.toLocaleString() },
     { key: 'recovered', label: 'Guérisons', sortable: true, render: (value: number) => value.toLocaleString() },
   ];
+
+  // Déterminer les données à afficher dans le tableau
+  const tableData = selectedDisease === 'covid-19' ? countriesData : influenzaData;
 
   if (loading) {
     return (
@@ -111,7 +115,7 @@ const Dashboard: React.FC = () => {
                   <AlertTriangle className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-red-800">Augmentation du COVID-19</h4>
+                  <h4 className="font-medium text-red-800">Augmentation du {currentDisease?.name}</h4>
                   <p className="text-sm text-red-600">Augmentation significative en Asie du Sud-Est</p>
                 </div>
               </div>
@@ -145,7 +149,7 @@ const Dashboard: React.FC = () => {
       <div>
         <DataTable
           title="Données par pays"
-          data={countriesData}
+          data={tableData} // Utiliser les données dynamiques
           columns={tableColumns}
         />
       </div>

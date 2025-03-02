@@ -98,27 +98,27 @@ const DataManagement: React.FC = () => {
 
   // Appliquer les filtres régionaux et avancés
   const filteredData = applyAdvancedFilters(
-    filterRegion === 'all'
-      ? getFilteredData()
-      : getFilteredData().filter((item) => {
-          if (selectedDisease === 'covid-19') {
-            // Filtrage pour COVID-19
-            if (filterRegion === 'asia') {
-              return ['China', 'India', 'Japan', 'South Korea', 'Vietnam', 'Thailand'].includes(item.country);
-            } else if (filterRegion === 'europe') {
-              return ['Germany', 'France', 'UK', 'Italy', 'Spain', 'Netherlands'].includes(item.country);
-            } else if (filterRegion === 'Amerique') {
-              return ['USA', 'Canada', 'Brazil', 'Mexico', 'Argentina', 'Colombia'].includes(item.country);
-            } else if (filterRegion === 'africa') {
-              return ['South Africa', 'Nigeria', 'Egypt', 'Morocco', 'Kenya', 'Ethiopia'].includes(item.country);
-            }
-          } else if (selectedDisease === 'influenza') {
-            // Filtrage pour Influenza
-            return item.region === filterRegion;
+  filterRegion === 'all'
+    ? getFilteredData()
+    : getFilteredData().filter((item) => {
+        if (selectedDisease === 'covid-19') {
+          // Filtrage pour COVID-19
+          if (filterRegion === 'asia') {
+            return ['China', 'India', 'Japan', 'South Korea', 'Vietnam', 'Thailand'].includes(item.country);
+          } else if (filterRegion === 'europe') {
+            return ['Germany', 'France', 'UK', 'Italy', 'Spain', 'Netherlands'].includes(item.country);
+          } else if (filterRegion === 'americas') {
+            return ['USA', 'Canada', 'Brazil', 'Mexico', 'Argentina', 'Colombia'].includes(item.country);
+          } else if (filterRegion === 'africa') {
+            return ['South Africa', 'Nigeria', 'Egypt', 'Morocco', 'Kenya', 'Ethiopia'].includes(item.country);
           }
-          return true;
-        })
-  );
+        } else if (selectedDisease === 'influenza') {
+          // Filtrage pour Influenza
+          return item.region === filterRegion;
+        }
+        return true;
+      })
+);
 
 
     // Colonnes pour le tableau des pays
