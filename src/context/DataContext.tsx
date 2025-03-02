@@ -91,10 +91,10 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   
     // Mappez les juridictions aux régions
     const jurisdictionToRegionMap: { [key: string]: string } = {
-      'Florida': 'americas',
-      'Texas': 'americas',
-      'California': 'americas',
-      'New York': 'americas',
+      'Floride': 'Amerique',
+      'Texas': 'Amerique',
+      'Californie': 'Amerique',
+      'New York': 'Amerique',
       // Ajoutez d'autres correspondances ici
     };
   

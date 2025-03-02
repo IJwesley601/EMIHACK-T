@@ -107,7 +107,7 @@ const DataManagement: React.FC = () => {
               return ['China', 'India', 'Japan', 'South Korea', 'Vietnam', 'Thailand'].includes(item.country);
             } else if (filterRegion === 'europe') {
               return ['Germany', 'France', 'UK', 'Italy', 'Spain', 'Netherlands'].includes(item.country);
-            } else if (filterRegion === 'americas') {
+            } else if (filterRegion === 'Amerique') {
               return ['USA', 'Canada', 'Brazil', 'Mexico', 'Argentina', 'Colombia'].includes(item.country);
             } else if (filterRegion === 'africa') {
               return ['South Africa', 'Nigeria', 'Egypt', 'Morocco', 'Kenya', 'Ethiopia'].includes(item.country);
