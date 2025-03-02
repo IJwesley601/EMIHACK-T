@@ -150,7 +150,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const [covidData, influenzaData] = await Promise.all([
         fetchCovidData(),
-        fetchInfluenzaData(), // Utiliser la nouvelle fonction transformée
+        fetchInfluenzaData(),
       ]);
 
       const { countriesResponse, timelineResponse } = covidData;
@@ -195,8 +195,104 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
           recovered: 18000,
           active: 2000,
         },
+        // Ajoutez les épidémies historiques avec des données approximatives
+        {
+          id: 'plague-of-athens',
+          name: 'Peste d\'Athènes',
+          cases: 100000, // Estimation historique
+          deaths: 75000, // Estimation historique
+          recovered: 25000, // Estimation historique
+          active: 0, // Terminée
+        },
+        {
+          id: 'antonine-plague',
+          name: 'Peste antonine',
+          cases: 5000000, // Estimation historique
+          deaths: 5000000, // Estimation historique
+          recovered: 0, // Aucun survivant connu
+          active: 0, // Terminée
+        },
+        {
+          id: 'black-death',
+          name: 'Peste noire',
+          cases: 75000000, // Estimation historique
+          deaths: 50000000, // Estimation historique
+          recovered: 25000000, // Estimation historique
+          active: 0, // Terminée
+        },
+        {
+          id: 'cholera',
+          name: 'Choléra',
+          cases: 1000000, // Estimation annuelle actuelle
+          deaths: 10000, // Estimation annuelle actuelle
+          recovered: 990000, // Estimation annuelle actuelle
+          active: 10000, // Cas actifs actuels
+        },
+        {
+          id: 'hiv-aids',
+          name: 'VIH/SIDA',
+          cases: 38000000, // Estimation actuelle
+          deaths: 33000000, // Estimation historique
+          recovered: 5000000, // Estimation actuelle
+          active: 33000000, // Cas actifs actuels
+        },
+        {
+          id: 'sars',
+          name: 'SRAS',
+          cases: 8096, // Données historiques
+          deaths: 774, // Données historiques
+          recovered: 7322, // Données historiques
+          active: 0, // Terminée
+        },
+        {
+          id: 'h1n1',
+          name: 'Grippe H1N1',
+          cases: 140000000, // Estimation historique
+          deaths: 151700, // Estimation historique
+          recovered: 139848300, // Estimation historique
+          active: 0, // Terminée
+        },
+        {
+          id: 'yellow-fever',
+          name: 'Fièvre jaune',
+          cases: 200000, // Estimation annuelle actuelle
+          deaths: 30000, // Estimation annuelle actuelle
+          recovered: 170000, // Estimation annuelle actuelle
+          active: 200000, // Cas actifs actuels
+        },
+        {
+          id: 'leprosy',
+          name: 'Lèpre',
+          cases: 200000, // Estimation actuelle
+          deaths: 0, // Très faible mortalité
+          recovered: 200000, // Estimation actuelle
+          active: 200000, // Cas actifs actuels
+        },
+        {
+          id: 'tuberculosis',
+          name: 'Tuberculose',
+          cases: 10000000, // Estimation annuelle actuelle
+          deaths: 1500000, // Estimation annuelle actuelle
+          recovered: 8500000, // Estimation annuelle actuelle
+          active: 10000000, // Cas actifs actuels
+        },
+        {
+          id: 'measles',
+          name: 'Rougeole',
+          cases: 1000000, // Estimation annuelle actuelle
+          deaths: 100000, // Estimation annuelle actuelle
+          recovered: 900000, // Estimation annuelle actuelle
+          active: 1000000, // Cas actifs actuels
+        },
+        {
+          id: 'malaria',
+          name: 'Paludisme',
+          cases: 229000000, // Estimation annuelle actuelle
+          deaths: 409000, // Estimation annuelle actuelle
+          recovered: 228591000, // Estimation annuelle actuelle
+          active: 229000000, // Cas actifs actuels
+        },
       ]);
-
       // Mock prediction data
       const today = new Date();
       const mockPredictions: PredictionData[] = [];

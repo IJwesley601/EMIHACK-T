@@ -7,38 +7,39 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from 'recharts';
-
-interface DataPoint {
-  [key: string]: any;
-}
+import { useData } from '../context/DataContext'; // Assurez-vous que le chemin est correct
 
 interface LineChartProps {
-  data: DataPoint[];
-  xKey: string;
-  lines: {
-    key: string;
-    color: string;
-    name: string;
-  }[];
   title: string;
   height?: number;
 }
 
-const LineChart: React.FC<LineChartProps> = ({ 
-  data, 
-  xKey, 
-  lines, 
-  title, 
-  height = 400 
-}) => {
+const LineChart: React.FC<LineChartProps> = ({ title, height = 400 }) => {
+  const { diseases } = useData();
+
+  // Transformer les données des épidémies pour le graphique
+  const chartData = diseases.map((disease) => ({
+    name: disease.name,
+    cases: disease.cases,
+    deaths: disease.deaths,
+    recovered: disease.recovered,
+  }));
+
+  // Définir les lignes à afficher
+  const lines = [
+    { key: 'cases', color: '#8884d8', name: 'Cas' },
+    { key: 'deaths', color: '#82ca9d', name: 'Décès' },
+    { key: 'recovered', color: '#ffc658', name: 'Récupérés' },
+  ];
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
       <h3 className="text-lg font-semibold mb-4">{title}</h3>
       <ResponsiveContainer width="100%" height={height}>
         <RechartsLineChart
-          data={data}
+          data={chartData}
           margin={{
             top: 5,
             right: 30,
@@ -47,18 +48,11 @@ const LineChart: React.FC<LineChartProps> = ({
           }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-          <XAxis 
-            dataKey={xKey} 
+          <XAxis
+            dataKey="name" // Afficher le nom de l'épidémie sur l'axe X
             tick={{ fontSize: 12 }}
-            tickFormatter={(value) => {
-              if (typeof value === 'string' && value.includes('-')) {
-                const parts = value.split('-');
-                return `${parts[1]}/${parts[2]}`;
-              }
-              return value;
-            }}
           />
-          <YAxis 
+          <YAxis
             tick={{ fontSize: 12 }}
             tickFormatter={(value) => {
               if (value >= 1000000) {
@@ -69,15 +63,9 @@ const LineChart: React.FC<LineChartProps> = ({
               return value;
             }}
           />
-          <Tooltip 
+          <Tooltip
             formatter={(value: number) => [value.toLocaleString(), '']}
-            labelFormatter={(label) => {
-              if (typeof label === 'string' && label.includes('-')) {
-                const date = new Date(label);
-                return date.toLocaleDateString();
-              }
-              return label;
-            }}
+            labelFormatter={(label) => label} // Afficher le nom de l'épidémie dans le tooltip
           />
           <Legend />
           {lines.map((line) => (

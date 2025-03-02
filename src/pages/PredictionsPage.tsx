@@ -9,6 +9,25 @@ const PredictionsPage: React.FC = () => {
   // Trouver la maladie sélectionnée
   const currentDisease = diseases.find(d => d.id === selectedDisease) || diseases[0];
 
+  // Calcul des métriques basées sur currentDisease
+  const newCasesPredicted = currentDisease
+    ? predictions.reduce((sum, prediction) => sum + prediction.predictedCases, 0)
+    : 0;
+
+  const growthRate = currentDisease
+    ? ((currentDisease.cases - currentDisease.recovered) / currentDisease.cases) * 100
+    : 0;
+
+  const peakDate = predictions.length > 0
+    ? predictions.reduce((max, prediction) => 
+        prediction.predictedCases > max.predictedCases ? prediction : max
+      ).date
+    : 'N/A';
+
+  const confidenceLevel = predictions.length > 0
+    ? predictions[0]?.confidence * 100
+    : 0;
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -76,20 +95,20 @@ const PredictionsPage: React.FC = () => {
             <div className="flex justify-between mb-2">
               <span className="text-sm text-gray-600">Nouveaux cas prévus</span>
               <span className="text-sm font-medium text-blue-600">
-                +{(predictions[29]?.predictedCases - predictions[0]?.predictedCases).toLocaleString()}
+                +{newCasesPredicted.toLocaleString()}
               </span>
             </div>
             <div className="flex justify-between mb-2">
               <span className="text-sm text-gray-600">Taux de croissance</span>
-              <span className="text-sm font-medium text-red-500">+12,4%</span>
+              <span className="text-sm font-medium text-red-500">{growthRate.toFixed(2)}%</span>
             </div>
             <div className="flex justify-between mb-2">
               <span className="text-sm text-gray-600">Date de pic</span>
-              <span className="text-sm font-medium">{predictions[20]?.date}</span>
+              <span className="text-sm font-medium">{peakDate}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-gray-600">Niveau de confiance</span>
-              <span className="text-sm font-medium">{(predictions[0]?.confidence * 100).toFixed(1)}%</span>
+              <span className="text-sm font-medium">{confidenceLevel.toFixed(1)}%</span>
             </div>
           </div>
         </div>
