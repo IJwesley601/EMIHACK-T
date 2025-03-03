@@ -26,7 +26,7 @@ const Sidebar: React.FC = () => {
       <div className="p-5 border-b border-blue-800">
         <div className="flex items-center space-x-3">
           <Activity className="h-8 w-8 text-blue-300" />
-          <h1 className="text-xl font-bold">EpiTrack AI</h1>
+          <h1 className="text-xl font-bold">PandemioTech</h1>
         </div>
         <p className="text-blue-300 text-sm mt-1">
           Plateforme de gestion des épidémies

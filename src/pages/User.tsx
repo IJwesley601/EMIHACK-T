@@ -11,27 +11,19 @@ const UserManagement: React.FC = () => {
   const [usersData, setUsersData] = useState([
     {
       id: 1,
-      name: 'Jean Dupont',
-      email: 'jean.dupont@example.com',
+      name: 'John Wesley',
+      email: 'admin@gmail.com',
       role: 'Admin',
       verification: 'isVerified',
-      lastLogin: '2023-05-15',
+      lastLogin: '2025-03-02',
     },
     {
       id: 2,
-      name: 'Marie Curie',
-      email: 'marie.curie@example.com',
-      role: 'Editor',
+      name: 'Solohery Alain',
+      email: 'alain@yahoo.com',
+      role: 'Admin',
       verification: 'isVerified',
-      lastLogin: '2023-05-10',
-    },
-    {
-      id: 3,
-      name: 'Pierre Durand',
-      email: 'pierre.durand@example.com',
-      role: 'Viewer',
-      verification: 'isVerified',
-      lastLogin: '2023-05-14',
+      lastLogin: '2025-03-01',
     },
   ]);
 

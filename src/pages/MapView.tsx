@@ -50,7 +50,7 @@ const MapView: React.FC = () => {
                   </select>
                 </div>
                 
-                <div>
+                {/* <div>
                   <label htmlFor="map-type" className="block text-sm text-gray-600 mb-1">
                     Affichage
                   </label>
@@ -64,7 +64,7 @@ const MapView: React.FC = () => {
                     <option value="deaths">Décès</option>
                     <option value="recovered">Guérisons</option>
                   </select>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
