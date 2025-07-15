@@ -81,7 +81,7 @@ const Login: React.FC = () => {
           <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
             <Activity size={32} color="#3f51b5" />
             <Typography component="h1" variant="h5" sx={{ ml: 1 }}>
-            PandemioTech
+              PandemioTech
             </Typography>
           </Box>
           <Typography component="h1" variant="h5">
@@ -184,6 +184,11 @@ const Login: React.FC = () => {
               </MuiLink>
             </Typography>
           </Box>
+          <br />
+          <p>
+            Important: Visualisation sur ordinateur recommandé pour une bonne
+            visualisation !
+          </p>
         </Paper>
       </Box>
 

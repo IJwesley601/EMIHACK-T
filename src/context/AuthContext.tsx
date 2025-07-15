@@ -23,7 +23,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is stored in localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -31,32 +30,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(false);
   }, []);
 
-  
   const login = async (email: string, password: string) => {
     try {
       setLoading(true);
+      
+      // Création d'un utilisateur factice sans vérification
+      const mockUser: User = {
+        _id: 'mock-id-' + Math.random().toString(36).substr(2, 9),
+        name: email.split('@')[0] || 'Utilisateur',
+        email: email,
+        role: 'admin' // Par défaut on met admin, mais vous pouvez adapter
+      };
 
-      // Appel à l'API de login
-      const response = await axios.post(
-        "http://localhost:3000/api/users/login",
-        {
-          email,
-          password,
-        }
-      );
-
-      // Extraire les données de la réponse
-      const { token, user } = response.data;
-
-      // Stocker le token dans le localStorage
-      localStorage.setItem("token", token);
-
-      // Stocker les informations de l'utilisateur dans le state et le localStorage
-      setUser(user);
-      localStorage.setItem("user", JSON.stringify(user));
+      // Stockage du mock user
+      setUser(mockUser);
+      localStorage.setItem('user', JSON.stringify(mockUser));
+      
+      // Optionnel: stocker un token factice
+      localStorage.setItem('token', 'mock-token-' + Math.random().toString(36).substr(2, 16));
+      
     } catch (error) {
-      console.error("Login failed:", error);
-      throw error; // Propager l'erreur pour la gérer dans le composant
+      console.error("Login simulation error:", error);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -65,6 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
   };
 
   return (
