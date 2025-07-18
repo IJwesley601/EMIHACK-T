@@ -12,6 +12,7 @@ import { AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DataContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import User from './pages/User';
+import SignIn from './pages/SignIn';
 
 function App() {
   return (
@@ -20,7 +21,11 @@ function App() {
         <Router>
           <div className="flex h-screen bg-gray-50">
             <Routes>
+              {/* Accessible sans être connecté */}
               <Route path="/login" element={<Login />} />
+              <Route path="/signin" element={<SignIn />} />
+
+              {/* Toutes les routes protégées */}
               <Route
                 path="/*"
                 element={
