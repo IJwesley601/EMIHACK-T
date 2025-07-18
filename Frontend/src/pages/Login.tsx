@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const Login: React.FC = () => {
    const [showPassword, setShowPassword] = useState(false);
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
    const [error, setError] = useState("");
    const [isLoading, setIsLoading] = useState(false);
+   const navigate = useNavigate()
 
    const togglePasswordVisibility = () => {
       setShowPassword((prev) => !prev);
@@ -25,6 +27,7 @@ const Login: React.FC = () => {
             }
          );
          console.log("login successfull", response.data);
+         navigate("/dashboard")
 
          setEmail("");
          setPassword("");
@@ -32,6 +35,10 @@ const Login: React.FC = () => {
          console.log("Authentification error", error);
       }
    };
+
+   const handleSignUpRedirect = () => {
+    navigate("/signin");
+  };
 
    return (
       <>
@@ -141,8 +148,9 @@ const Login: React.FC = () => {
                         <a
                            href="#"
                            className="hover:underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                           onClick={handleSignUpRedirect}
                         >
-                           Forgot your password?
+                           S'enregistrer !
                         </a>
                         <button
                            type="submit"

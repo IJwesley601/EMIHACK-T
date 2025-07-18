@@ -36,7 +36,7 @@ function App() {
                         <Header />
                         <main className="flex-1 overflow-y-auto p-4 bg-gray-50">
                           <Routes>
-                            <Route path="/" element={<Dashboard />} />
+                            <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/predictions" element={<PredictionsPage />} />
                             <Route path="/map" element={<MapView />} />
                             <Route path="/data" element={<DataManagement />} />
