@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { UserPlus, Lock, Mail, User } from "lucide-react";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const SignIn = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -11,7 +12,7 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-
+  const navigate = useNavigate()
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -28,21 +29,23 @@ const SignIn = () => {
     try {
       // Appel à l'API d'inscription
       const response = await axios.post('http://localhost:3000/api/users/ajouter', {
-        nom: formData.name,  // Conversion de name vers nom pour le backend
+        nom: formData.name,
         email: formData.email,
         password: formData.password,
-        role: 'user' // Rôle par défaut
+        role: 'user'
       });
 
       if (response.data.message) {
         setSuccess(true);
         setFormData({ name: "", email: "", password: "" });
         
-        // Réinitialisation du message de succès après 3 secondes
-        setTimeout(() => setSuccess(false), 3000);
+        // Afficher le message de succès pendant 3 secondes puis rediriger
+        setTimeout(() => {
+          setSuccess(false);
+          navigate('/login'); // Redirection vers la page de login
+        }, 3000);
       }
     } catch (err) {
-      // Gestion des erreurs avec message du serveur ou message par défaut
       setError(err.response?.data?.message || "Une erreur est survenue lors de l'inscription");
     } finally {
       setIsLoading(false);
@@ -181,12 +184,12 @@ const SignIn = () => {
             </div>
 
             <div className="mt-4">
-              <a
-                href="#"
+              <Link
+                to="/login"
                 className="w-full flex justify-center py-2.5 px-4 rounded-lg text-indigo-600 hover:text-indigo-700 font-medium border border-gray-300 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200"
               >
                 Se connecter à votre compte
-              </a>
+              </Link>
             </div>
           </div>
         </div>
