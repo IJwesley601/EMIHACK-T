@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 const Login: React.FC = () => {
    const [showPassword, setShowPassword] = useState(false);
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
    const [error, setError] = useState("");
    const [isLoading, setIsLoading] = useState(false);
-   const navigate = useNavigate()
+   const navigate = useNavigate();
+   const { login } = useAuth();
 
    const togglePasswordVisibility = () => {
       setShowPassword((prev) => !prev);
@@ -19,6 +21,7 @@ const Login: React.FC = () => {
       setIsLoading(true);
 
       try {
+         // Envoie au backend
          const response = await axios.post(
             "http://localhost:3000/api/users/login",
             {
@@ -26,19 +29,28 @@ const Login: React.FC = () => {
                password,
             }
          );
+
          console.log("login successfull", response.data);
-         navigate("/dashboard")
+
+         // Mets à jour le contexte d'authentification
+         await login(email, password);
+
+         // Redirection
+         navigate("/");
 
          setEmail("");
          setPassword("");
       } catch (error) {
          console.log("Authentification error", error);
+         setError("Email ou mot de passe incorrect");
+      } finally {
+         setIsLoading(false);
       }
    };
 
    const handleSignUpRedirect = () => {
-    navigate("/signin");
-  };
+      navigate("/signin");
+   };
 
    return (
       <>
