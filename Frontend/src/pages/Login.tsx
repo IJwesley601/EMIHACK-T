@@ -1,282 +1,166 @@
+import axios from "axios";
 import React, { useState } from "react";
-import {
-  Container,
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Paper,
-  Alert,
-  Link as MuiLink,
-  Modal,
-  Stack,
-} from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import { Activity, LogIn, UserPlus } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false); // État pour le modal d'inscription
-  const [signUpEmail, setSignUpEmail] = useState("");
-  const [signUpPassword, setSignUpPassword] = useState("");
-  const [signUpError, setSignUpError] = useState("");
-  const navigate = useNavigate();
-  const { login } = useAuth();
+   const [showPassword, setShowPassword] = useState(false);
+   const [email, setEmail] = useState("");
+   const [password, setPassword] = useState("");
+   const [error, setError] = useState("");
+   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setIsLoading(true);
+   const togglePasswordVisibility = () => {
+      setShowPassword((prev) => !prev);
+   };
 
-    try {
-      await login(email, password);
-      navigate("/");
-    } catch (err) {
-      setError("Email ou mot de passe invalide");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+   const handleSubmit = async (e) => {
+      e.preventDefault();
+      setError("");
+      setIsLoading(true);
 
-  const handleSignUpSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSignUpError("");
-    setIsLoading(true);
+      try {
+         const response = await axios.post(
+            "http://localhost:3000/api/users/login",
+            {
+               email,
+               password,
+            }
+         );
+         console.log("login successfull", response.data);
 
-    try {
-      await signUp(signUpEmail, signUpPassword);
-      setIsSignUpModalOpen(false); // Fermer le modal après l'inscription
-      navigate("/");
-    } catch (err) {
-      setSignUpError("Une erreur s'est produite lors de l'inscription");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+         setEmail("");
+         setPassword("");
+      } catch (error) {
+         console.log("Authentification error", error);
+      }
+   };
 
-  return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Paper
-          elevation={3}
-          sx={{
-            p: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            width: "100%",
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-            <Activity size={32} color="#3f51b5" />
-            <Typography component="h1" variant="h5" sx={{ ml: 1 }}>
-              PandemioTech
-            </Typography>
-          </Box>
-          <Typography component="h1" variant="h5">
-            Connexion
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ mt: 1, mb: 3 }}
-          >
-            Plateforme de gestion des épidémies
-          </Typography>
+   return (
+      <>
+         <div className="w-full font-sans text-gray-900 antialiased">
+            <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-[#f8f4f3]">
+               <div>
+                  <a>
+                     <h2 className="font-bold text-3xl">
+                        PENDEMI0
+                        <span className="bg-[#f84525] text-white px-2 rounded-md">
+                           TECH
+                        </span>
+                     </h2>
+                  </a>
+               </div>
 
-          {error && (
-            <Alert severity="error" sx={{ width: "100%", mb: 2 }}>
-              {error}
-            </Alert>
-          )}
+               <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+                  <form onSubmit={handleSubmit}>
+                     <div className="py-8">
+                        <center>
+                           <span className="text-2xl font-semibold">
+                              Log In
+                           </span>
+                        </center>
+                        {error && (
+                           <div className="text-red-500 mb-4 mt-4">{error}</div>
+                        )}
+                     </div>
 
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1, width: "100%" }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Adresse email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Mot de passe"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                mt: 2,
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <input
-                  id="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                />
-                <Typography variant="body2" sx={{ ml: 1 }}>
-                  Se souvenir de moi
-                </Typography>
-              </Box>
-              <MuiLink href="#" variant="body2" color="primary">
-                Mot de passe oublié ?
-              </MuiLink>
-            </Box>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
-              ) : (
-                <>
-                  <LogIn className="h-4 w-4 mr-2" />
-                  Se connecter
-                </>
-              )}
-            </Button>
-          </Box>
+                     <div>
+                        <label
+                           className="block font-medium text-sm text-gray-700"
+                           htmlFor="email"
+                        >
+                           Email
+                        </label>
+                        <input
+                           type="email"
+                           name="email"
+                           value={email}
+                           onChange={(e) => setEmail(e.target.value)}
+                           placeholder="Email"
+                           required
+                           className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]"
+                        />
+                     </div>
 
-          <Box sx={{ mt: 3, textAlign: "center" }}>
-            <Typography variant="body2" color="text.secondary">
-              Pas encore de compte ?{" "}
-              <MuiLink
-                component="button"
-                variant="body2"
-                color="primary"
-                onClick={() => setIsSignUpModalOpen(true)}
-              >
-                S'inscrire
-              </MuiLink>
-            </Typography>
-          </Box>
-          <br />
-          <p>
-            Important: Visualisation sur ordinateur recommandé pour une bonne
-            visualisation !
-          </p>
-        </Paper>
-      </Box>
+                     <div className="mt-4">
+                        <label
+                           className="block font-medium text-sm text-gray-700"
+                           htmlFor="password"
+                        >
+                           Password
+                        </label>
+                        <div className="relative">
+                           <input
+                              id="password"
+                              type={showPassword ? "text" : "password"}
+                              name="password"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              placeholder="Password"
+                              required
+                              autoComplete="current-password"
+                              className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]"
+                           />
+                           <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                              <button
+                                 type="button"
+                                 onClick={togglePasswordVisibility}
+                                 className="text-gray-500 focus:outline-none focus:text-gray-600 hover:text-gray-600"
+                              >
+                                 <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-6 h-6"
+                                    viewBox="0 0 24 24"
+                                    style={{
+                                       fill: "rgba(0, 0, 0, 1)",
+                                       transform: "",
+                                    }}
+                                 >
+                                    <path d="M12 4.998c-1.836 0-3.356.389-4.617.971L3.707 2.293 2.293 3.707l3.315 3.316c-2.613 1.952-3.543 4.618-3.557 4.66l-.105.316.105.316C2.073 12.382 4.367 19 12 19c1.835 0 3.354-.389 4.615-.971l3.678 3.678 1.414-1.414-3.317-3.317c2.614-1.952 3.545-4.618 3.559-4.66l.105-.316-.105-.316c-.022-.068-2.316-6.686-9.949-6.686zM4.074 12c.103-.236.274-.586.521-.989l5.867 5.867C6.249 16.23 4.523 13.035 4.074 12zm9.247 4.907-7.48-7.481a8.138 8.138 0 0 1 1.188-.982l8.055 8.054a8.835 8.835 0 0 1-1.763.409zm3.648-1.352-1.541-1.541c.354-.596.572-1.28.572-2.015 0-.474-.099-.924-.255-1.349A.983.983 0 0 1 15 11a1 1 0 0 1-1-1c0-.439.288-.802.682-.936A3.97 3.97 0 0 0 12 7.999c-.735 0-1.419.218-2.015.572l-1.07-1.07A9.292 9.292 0 0 1 12 6.998c5.351 0 7.425 3.847 7.926 5a8.573 8.573 0 0 1-2.957 3.557z" />
+                                 </svg>
+                              </button>
+                           </div>
+                        </div>
+                     </div>
 
-      {/* Modal d'inscription */}
-      <Modal
-        open={isSignUpModalOpen}
-        onClose={() => setIsSignUpModalOpen(false)}
-        aria-labelledby="modal-signup-title"
-        aria-describedby="modal-signup-description"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            p: 4,
-            borderRadius: 2,
-          }}
-        >
-          <Typography
-            id="modal-signup-title"
-            variant="h6"
-            component="h2"
-            sx={{ mb: 2 }}
-          >
-            <UserPlus size={24} className="mr-2" />
-            S'inscrire
-          </Typography>
-          {signUpError && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {signUpError}
-            </Alert>
-          )}
-          <Box component="form" onSubmit={handleSignUpSubmit} noValidate>
-            <Stack spacing={2}>
-              <TextField
-                required
-                fullWidth
-                id="name"
-                label="Nom complet"
-                name="email"
-                autoComplete="email"
-                value={signUpEmail}
-                onChange={(e) => setSignUpEmail(e.target.value)}
-              />
-              <TextField
-                required
-                fullWidth
-                id="signup-email"
-                label="Adresse email"
-                name="email"
-                autoComplete="email"
-                value={signUpEmail}
-                onChange={(e) => setSignUpEmail(e.target.value)}
-              />
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Mot de passe"
-                type="password"
-                id="signup-password"
-                autoComplete="new-password"
-                value={signUpPassword}
-                onChange={(e) => setSignUpPassword(e.target.value)}
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
-                ) : (
-                  "S'inscrire"
-                )}
-              </Button>
-            </Stack>
-          </Box>
-        </Box>
-      </Modal>
-    </Container>
-  );
+                     <div className="block mt-4">
+                        <label
+                           htmlFor="remember_me"
+                           className="flex items-center"
+                        >
+                           <input
+                              type="checkbox"
+                              id="remember_me"
+                              name="remember"
+                              className="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                           />
+                           <span className="ms-2 text-sm text-gray-600">
+                              Remember Me
+                           </span>
+                        </label>
+                     </div>
+
+                     <div className="flex items-center justify-end mt-4">
+                        <a
+                           href="#"
+                           className="hover:underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                           Forgot your password?
+                        </a>
+                        <button
+                           type="submit"
+                           disabled={isLoading}
+                           className={`ms-4 inline-flex items-center px-4 py-2 bg-[#f84525] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ${
+                              isLoading ? "opacity-50 cursor-not-allowed" : ""
+                           }`}
+                        >
+                           {isLoading ? "Chargement..." : "Sign In"}
+                        </button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </>
+   );
 };
 
 export default Login;
