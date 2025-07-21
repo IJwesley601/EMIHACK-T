@@ -60,10 +60,10 @@ const Login: React.FC = () => {
          <div className="min-h-screen from-indigo-50 to-white py-5 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md mx-auto">
                <div className="text-center mb-10">
-                  <h2 className="text-3xl sm:text-7xl font-extrabold text-white">
+                  <h2 className="text-3xl font-extrabold text-white">
                      Connectez-vous à votre compte
                   </h2>
-                  <p className="mt-2 text-white">
+                  <p className="mt-2 text-white sm:hidden">
                      Entrez vos identifiants pour accéder à votre espace
                   </p>
                </div>
