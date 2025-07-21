@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 interface User {
@@ -30,7 +29,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(false);
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string) => {
     try {
       setLoading(true);
       
