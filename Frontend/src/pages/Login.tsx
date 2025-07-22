@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
 
@@ -17,7 +17,7 @@ const Login: React.FC = () => {
       setShowPassword((prev) => !prev);
    };
 
-   const handleSubmit = async (e) => {
+   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       setError("");
       setIsLoading(true);
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
       try {
          // Envoie au backend
          const response = await axios.post(
-            "http://localhost:3000/api/users/login",
+            "http://localhost:3000/api/auth/login",
             {
                email,
                password,
@@ -69,7 +69,7 @@ const Login: React.FC = () => {
                </div>
 
                {error && (
-                  <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg border border-red-200 flex items-center">
+                  <div className="mb-6 p-2 bg-red-50 text-red-700 rounded-lg border border-red-200 flex items-center">
                      <svg
                         className="w-5 h-5 mr-2"
                         fill="currentColor"
@@ -148,12 +148,12 @@ const Login: React.FC = () => {
                               Se souvenir de moi
                            </label>
                         </div>
-                        <a
-                           href="#"
+                        <Link
+                           to="/forgot-password"
                            className="text-sm text-orange-600 hover:text-orange-400 underline"
                         >
                            Mot de passe oublié?
-                        </a>
+                        </Link>
                      </div>
 
                      <div>
