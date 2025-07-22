@@ -62,6 +62,9 @@ const ResetPassword = () => {
                   <div className="text-lg text-gray-800 py-2">
                      <p>Réinitialiser votre mot de passe</p>
                   </div>
+                  <div className="py-2">
+                     <p className="text-gray-800 text-sm">token : {token}</p>
+                  </div>
                   <div className="bg-white py-8 px-6 shadow-sm rounded-xl border border-gray-100">
                      <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="relative">
