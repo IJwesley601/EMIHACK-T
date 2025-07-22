@@ -191,7 +191,7 @@ exports.forgotPassword = async (req, res) => {
          },
       });
 
-      const resetLink = `http://localhost:3000/reset-password/${token}`;
+      const resetLink = `http://localhost:5173/reset-password/${token}`;
 
       await transporter.sendMail({
          from: `"Support Emihack 👩‍💻" <${process.env.EMAIL_FROM}>`,
