@@ -38,7 +38,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         _id: 'mock-id-' + Math.random().toString(36).substr(2, 9),
         name: email.split('@')[0] || 'Utilisateur',
         email: email,
-        role: 'admin' // Par défaut on met admin, mais vous pouvez adapter
+        role: 'admin'
       };
 
       // Stockage du mock user
@@ -57,9 +57,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = () => {
-    setUser(null);
+    const confirmation = confirm("Êtes-vous sûr de vouloir vous déconnecter ?")
+    if(confirmation){
+      setUser(null);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    } else{
+      return 
+    }
   };
 
   return (

@@ -5,20 +5,23 @@ import { useNavigate } from "react-router-dom";
 const ForgotPassword = () => {
    const [email, setEmail] = useState("");
    const [message, setMessage] = useState("");
+   const [etatButton, setEtatButton] = useState("Envoyer")
    const navigate = useNavigate();
 
    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      setEtatButton("Chargement...")
       try {
          const response = await axios.post(
             "http://localhost:3000/api/auth/forgot-password",
             { email }
          );
+         setEtatButton("Envoyer")
          setMessage(response.data.message);
          setEmail("");
          setTimeout(() => {
             navigate("/login");
-         }, 3000);
+         }, 5000);
       } catch (error) {
          console.log("Erreur lors de l'envoie du mail", error);
          setMessage("Erreur lors de l'envoi, email non trouvé");
@@ -64,7 +67,7 @@ const ForgotPassword = () => {
                         className="ring-offset-background focus-visible:ring-ring flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-black/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-800"
                         type="submit"
                      >
-                        envoyer
+                        {etatButton}
                      </button>
                      {message && (
                         <p
@@ -74,7 +77,7 @@ const ForgotPassword = () => {
                                  : "text-green-600"
                            }`}
                         >
-                           {message}
+                           " {message} "
                         </p>
                      )}
                   </div>
