@@ -12,9 +12,12 @@ import {
   User,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { FaUser, FaUserShield } from 'react-icons/fa'; // FaUserShield = admin, FaUser = simple utilisateur
 
 const Sidebar: React.FC = () => {
   const { logout} = useAuth();
+  const { hasRole } = useAuth();
+
 
   const [user, setUser] = useState<any | null>(() => {
     const storedUser = localStorage.getItem("user");
@@ -92,19 +95,21 @@ const Sidebar: React.FC = () => {
             Gestion des données
           </NavLink>
 
-          <NavLink
-            to="/user"
-            className={({ isActive }) =>
-              `flex items-center px-4 py-3 text-sm rounded-lg ${
-                isActive
-                  ? "bg-blue-800 text-white"
-                  : "text-blue-100 hover:bg-blue-800"
-              }`
-            }
-          >
-            <User className="mr-3 h-5 w-5" />
-            Gestion utilisateurs
-          </NavLink>
+                <div className={hasRole('admin') ? "" : "hidden"}>
+                  <NavLink
+                    to="/user"
+                    className={({ isActive }) =>
+                      `flex items-center px-4 py-3 text-sm rounded-lg ${
+                        isActive
+                          ? "bg-blue-800 text-white"
+                          : "text-blue-100 hover:bg-blue-800"
+                      }`
+                    }
+                  >
+                    <User className="mr-3 h-5 w-5" />
+                    Gestion utilisateurs
+                  </NavLink>
+                </div>
 
           <div className="pt-4 mt-4 border-t border-blue-800">
             <div className="px-4 py-2">
@@ -112,22 +117,14 @@ const Sidebar: React.FC = () => {
                 Alertes
               </p>
             </div>
-            <div className="px-4 py-3 text-sm text-blue-100 rounded-lg bg-red-900/30 mx-2 mb-4">
-              <div className="flex items-center">
-                <AlertTriangle className="mr-2 h-4 w-4 text-red-400" />
-                <span className="font-medium">Poussée de COVID-19</span>
-              </div>
-              <p className="mt-1 text-xs text-blue-300">
-                Augmentation significative détectée en Asie du Sud-Est
-              </p>
-            </div>
           </div>
         </nav>
       </div>
 
       <div className="p-4 border-t border-blue-800">
-        <div className="flex items-center mb-4 px-4">
-          <div className="h-8 w-8 rounded-full bg-blue-700 flex items-center justify-center text-sm font-medium">
+        <div className="flex items-center mb-4 px-3">
+           <div className="h-8 w-8 rounded-full bg-blue-700 flex items-center justify-center text-white text-sm font-medium ">
+            {user?.role === 'admin' ? <FaUserShield size={18} /> : <FaUser size={18} />}
           </div>
           <div className="ml-3">
             <p className="text-sm font-medium">{user?.nom}</p>

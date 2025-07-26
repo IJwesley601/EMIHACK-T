@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 interface User {
@@ -13,6 +14,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   loading: boolean;
+  hasRole: (role: string) => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,32 +31,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(false);
   }, []);
 
-  const login = async (email: string) => {
-    try {
-      setLoading(true);
-      
-      // Création d'un utilisateur factice sans vérification
-      const mockUser: User = {
-        _id: 'mock-id-' + Math.random().toString(36).substr(2, 9),
-        name: email.split('@')[0] || 'Utilisateur',
-        email: email,
-        role: 'admin'
-      };
+const login = async (email: string) => {
+  try {
+    setLoading(true);
 
-      // Stockage du mock user
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
-      
-      // Optionnel: stocker un token factice
-      localStorage.setItem('token', 'mock-token-' + Math.random().toString(36).substr(2, 16));
-      
-    } catch (error) {
-      console.error("Login simulation error:", error);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  };
+    const response = await axios.post("http://localhost:3000/api/auth/login", { email });
+
+    const { user, token } = response.data;
+
+    setUser(user);
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+  } catch (error: any) {
+    console.error("Erreur de connexion :", error.response?.data || error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const logout = () => {
     const confirmation = confirm("Êtes-vous sûr de vouloir vous déconnecter ?")
@@ -67,6 +61,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const hasRole = (role: string): boolean => {
+    return user?.role === role;
+  };
+
+
   return (
     <AuthContext.Provider
       value={{
@@ -75,6 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         login,
         logout,
         loading,
+        hasRole,
       }}
     >
       {children}

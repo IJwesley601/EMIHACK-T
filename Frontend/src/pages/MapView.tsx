@@ -22,62 +22,46 @@ const MapView: React.FC = () => {
         <p className="text-gray-600">Carte interactive des points chauds épidémiques</p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6 flex-1">
-        <div className="w-full md:w-3/4 flex flex-col">
-          <div className="bg-white p-4 rounded-lg shadow-md mb-4">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center">
-                <Map className="h-5 w-5 text-blue-500 mr-2" />
-                <h3 className="font-medium">Carte mondiale de l'épidémie</h3>
-              </div>
-              
-              <div className="flex items-center space-x-4">
-                <div>
-                  <label htmlFor="disease-select" className="block text-sm text-gray-600 mb-1">
-                    Maladie
-                  </label>
-                  <select
-                    id="disease-select"
-                    className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={selectedDisease}
-                    onChange={(e) => setSelectedDisease(e.target.value)}
-                  >
-                    {diseases.map((disease) => (
-                      <option key={disease.id} value={disease.id}>
-                        {disease.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                
-                {/* <div>
-                  <label htmlFor="map-type" className="block text-sm text-gray-600 mb-1">
-                    Affichage
-                  </label>
-                  <select
-                    id="map-type"
-                    className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={mapType}
-                    onChange={(e) => setMapType(e.target.value as any)}
-                  >
-                    <option value="cases">Total des cas</option>
-                    <option value="deaths">Décès</option>
-                    <option value="recovered">Guérisons</option>
-                  </select>
-                </div> */}
-              </div>
+      {/* Conteneur principal avec carte en haut */}
+      <div className="flex flex-col flex-1">
+        {/* Carte avec hauteur fixe ou flexible */}
+        <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center">
+              <Map className="h-5 w-5 text-blue-500 mr-2" />
+              <h3 className="font-medium">Carte mondiale de l'épidémie</h3>
             </div>
-          </div>
-          
-          <div className="flex-1 bg-white rounded-lg shadow-md overflow-hidden">
-            <div className="h-full">
-              <MapComponent />
+            
+            <div className="flex items-center space-x-4">
+              <div>
+                <label htmlFor="disease-select" className="block text-sm text-gray-600 mb-1">
+                  Maladie
+                </label>
+                <select
+                  id="disease-select"
+                  className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={selectedDisease}
+                  onChange={(e) => setSelectedDisease(e.target.value)}
+                >
+                  {diseases.map((disease) => (
+                    <option key={disease.id} value={disease.id}>
+                      {disease.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
         </div>
         
-        <div className="w-full md:w-1/4">
-          <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+        {/* Conteneur de la carte avec hauteur définie */}
+        <div className="flex-1 bg-white rounded-lg shadow-md overflow-hidden mb-6" style={{ minHeight: '500px' }}>
+          <MapComponent />
+        </div>
+
+        {/* Grille des éléments en dessous */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-4 rounded-lg shadow-md">
             <div className="flex items-center mb-3">
               <Filter className="h-5 w-5 text-blue-500 mr-2" />
               <h3 className="font-medium">Légende de la carte</h3>
@@ -102,7 +86,7 @@ const MapView: React.FC = () => {
             </div>
           </div>
           
-          <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+          <div className="bg-white p-4 rounded-lg shadow-md">
             <div className="flex items-center mb-3">
               <AlertTriangle className="h-5 w-5 text-red-500 mr-2" />
               <h3 className="font-medium">Alertes des points chauds</h3>

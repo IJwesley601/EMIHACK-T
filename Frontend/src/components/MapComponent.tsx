@@ -21,33 +21,38 @@ const MapComponent: React.FC = () => {
   const mapRef = useRef(null); // Référence pour manipuler la carte
 
   // Fonction pour rechercher un lieu avec OpenStreetMap
-  const handleSearch = async () => {
-    if (!searchQuery) return;
+// Fonction pour rechercher un lieu avec OpenStreetMap
+const handleSearch = async () => {
+  if (!searchQuery) return;
 
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}`
-      );
-      const data = await response.json();
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}`
+    );
+    const data = await response.json();
 
-      if (data.length > 0) {
-        const { lat, lon, display_name } = data[0];
-        const newPosition = { lat: parseFloat(lat), lng: parseFloat(lon), name: display_name };
-        setSearchResult(newPosition);
+    if (data.length > 0) {
+      const { lat, lon, display_name } = data[0];
+      const newPosition = { lat: parseFloat(lat), lng: parseFloat(lon), name: display_name };
+      setSearchResult(newPosition);
 
-        // Zoomer et recentrer la carte sur le résultat
-        if (mapRef.current) {
-          mapRef.current.setView([newPosition.lat, newPosition.lng], 5 );
-        }
-      } else {
-        setSearchResult(null);
-        alert('Aucun résultat trouvé.');
+      // Animation fluide avec zoom progressif
+      if (mapRef.current) {
+        mapRef.current.flyTo([newPosition.lat, newPosition.lng], 6, {
+          duration: 1.5, // Durée de l'animation en secondes
+          easeLinearity: 0.25, // Fluidité de la courbe d'animation
+          noMoveStart: false // Permet l'animation dès le début
+        });
       }
-    } catch (error) {
-      console.error('Erreur lors de la recherche :', error);
-      alert('Une erreur est survenue lors de la recherche.');
+    } else {
+      setSearchResult(null);
+      alert('Aucun résultat trouvé.');
     }
-  };
+  } catch (error) {
+    console.error('Erreur lors de la recherche :', error);
+    alert('Une erreur est survenue lors de la recherche.');
+  }
+};
 
   return (
     <div className="h-full w-full rounded-lg overflow-hidden shadow-md">
@@ -78,6 +83,7 @@ const MapComponent: React.FC = () => {
         minZoom={2}
         whenCreated={setMap} // Référence à la carte Leaflet
         ref={mapRef} // Référence pour manipulation future
+        worldCopyJump={true} 
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
